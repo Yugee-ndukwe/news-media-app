@@ -29,7 +29,15 @@ export function NewsBoard() {
     const apiKey = 'cc574f9456b9456787947bc79900f612';
     const url = `https://newsapi.org/v2/top-headlines?country=${selectedCountry}&apiKey=${apiKey}`;
 
-    fetch(url)
+    const requestOptions = {
+      method: 'GET',
+      headers: {
+        'X-Api-Key': apiKey
+      }
+
+    }
+
+    fetch(url, requestOptions)
       .then(response => response.json())
       .then(data => {
         if (data.articles) {
