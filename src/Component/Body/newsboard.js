@@ -27,12 +27,14 @@ export function NewsBoard() {
 
   useEffect(() => {
     const apiKey = 'cc574f9456b9456787947bc79900f612';
-    const url = `https://newsapi.org/v2/top-headlines?country=${selectedCountry}&apiKey=${apiKey}`;
+    const url =  `https://cors-anywhere.herokuapp.com/https://newsapi.org/v2/top-headlines?country=${selectedCountry}&apiKey=${apiKey}`;
+
+    
 
     const requestOptions = {
       method: 'GET',
       headers: {
-        'X-Api-Key': apiKey
+        'X-Requested-With': 'XMLHttpRequest'
       }
 
     }
