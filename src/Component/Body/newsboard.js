@@ -40,7 +40,7 @@ export function NewsBoard() {
 
     }
 
-    fetch(url, requestOptions)
+    fetch(apiUrl, requestOptions)
       .then(response => response.json())
       .then(data => {
         if (data.articles) {
