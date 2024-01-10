@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { NewsItem } from "../Component/Body/newsitem";
 import { BasicExample } from "../Component/Navbar/navbar";
 import { useNavigate } from "react-router-dom";
-// import { HeaderNav } from "../../header/headernav";
 import { HeaderNav } from "./headernav";
 
 export function China() {
