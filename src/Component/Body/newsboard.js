@@ -30,7 +30,9 @@ export function NewsBoard() {
     // const url = `https://newsapi.org/v2/top-headlines?country=${selectedCountry}&apiKey=${apiKey}`;
     // const apiUrl = `https://cors-anywhere.herokuapp.com/https://newsapi.org/v2/top-headlines?country=${selectedCountry}&apiKey=${apiKey}`;
 
-    const apiUrl = `https://cors.bridged.cc/https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`;
+    // const apiUrl = `https://cors.bridged.cc/https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`;
+    const apiUrl = `https://cors-anywhere.whoer.net/https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`;
+
 
     const requestOptions = {
       method: 'GET',
