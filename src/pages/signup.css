@@ -1,0 +1,58 @@
+body{
+    /* background-image: url(https://img.freepik.com/free-photo/white-cloud-blue-sky_74190-7709.jpg); */
+    /* background: #453; */
+}
+.signUp{
+    /* border: 1px solid #555; */
+    margin: auto;
+    justify-content: center;
+    width: 30%;
+    height: 500px;
+    background-color:#fcfcfc;
+}
+
+.signUp h2{
+    text-align: center;
+    font-weight: 100;
+    font-family: arial;
+    font-style: oblique;
+}
+
+.signUp label{
+    align-items: center;
+    gap: 10px;
+    margin-left: 20px;
+}
+
+.signUp label input{
+    margin-bottom: 15px;
+    width: 300px;
+}
+.signUp form{
+    gap: 10px;
+    background-color: rgb( #fcfc47, #555cde, #d45e83);
+}
+
+.signUp select{
+    width: 300px;
+    margin-bottom: 15px;
+}
+form button{
+    /* align-items: center; */
+    width: 100px;
+    border-radius: 10px;
+    outline: 0;
+    border: 0;
+    height: 50px;
+    /* display: flex; */
+    /* justify-content: center; */
+    align-self: center;
+    background-color: #555cde;
+
+    color: #fcfcfc;
+
+}
+.form-btn{
+    align-items: center;
+    margin-top: 20px;
+}

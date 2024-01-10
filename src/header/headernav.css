@@ -1,0 +1,19 @@
+.header-nav{
+    background-color: goldenrod;
+    height: 80px;
+}
+.news{
+    font-size: 50px;
+    font-weight: 50px;
+}
+
+.country:hover{
+    border-bottom: 2px solid #fff;
+    color: #435;
+}
+
+video{
+    width: 870px;
+height: 400px;
+flex-shrink: 0;
+}
