@@ -6,7 +6,7 @@ import { MdChat } from "react-icons/md";
 import { AiOutlineLike } from "react-icons/ai";
 import { LuSendHorizonal } from "react-icons/lu";
 
-export function Thread ({ post, index, commentSectionVisible, selectedPostIndex, toggleCommentSection, handleCommentSubmit, handleChangeColor, authenticatedUser, onProfileEditClick }) {
+export function Thread ({ post, index, commentSectionVisible, selectedPostIndex, toggleCommentSection, handleCommentSubmit,count, handleIncreasecount, handleChangeColor, authenticatedUser, onProfileEditClick }) {
     const [commentContent, setCommentContent] = useState('');
     console.log('authenticatedUser in Thread:', authenticatedUser);
 
@@ -43,11 +43,11 @@ export function Thread ({ post, index, commentSectionVisible, selectedPostIndex,
      style={{fontSize: '20px'}}
       onClick={() => {
         toggleCommentSection(index);
-        // Call the function when the chat icon is clicked
+        handleIncreasecount(); // Call the function when the chat icon is clicked
       }}
      
     />
-    <span>{post.count}</span>
+    {/* <span>{count}</span> */}
     <AiOutlineLike
     onClick={() => handleChangeColor()}
       style={{fontSize: '22px'}}
@@ -79,7 +79,7 @@ export function Thread ({ post, index, commentSectionVisible, selectedPostIndex,
               </div>
             </div>
           ))}
-          <form onSubmit={handleCommentSubmit(index, commentContent, setCommentContent,  handleIncreasecount)} className="comment-form">
+          <form onSubmit={handleCommentSubmit(index, commentContent, setCommentContent)} className="comment-form">
             <textarea
               value={commentContent}
               onChange={(e) => setCommentContent(e.target.value)}

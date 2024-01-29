@@ -106,7 +106,7 @@ export function Forum() {
     // Check if authenticatedUser is set before initiating the profile update
     if (authenticatedUser && authenticatedUser.username) {
       // Call the function to initiate the user profile update
-      initiateProfileUpdate(authenticatedUser);
+      // initiateProfileUpdate(authenticatedUser);
     } else {
       console.log('User not authenticated.');
     }
