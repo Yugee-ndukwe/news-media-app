@@ -8,11 +8,25 @@ import {Footer} from '../footer/footer'
 
 export function SportCategory() {
   const [articles, setArticles] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState('us')
   const navigate = useNavigate()
+
+  const countryNames = {
+    us: 'United States',
+    gb: 'United Kingdom',
+    ca: 'Canada',
+    au: 'Australia',
+    ng: 'Nigeria',
+    ch: 'China',
+    mx: 'Mexico',
+    ae: 'United Arab Emirates',
+    ru: 'Russia',
+    it: 'Italy',
+  };
 
   useEffect(() => {
     const apiKey = 'cc574f9456b9456787947bc79900f612';
-    const url = `https://newsapi.org/v2/top-headlines?country=us&category=sports&apiKey=${apiKey}`;
+    const url = `https://newsapi.org/v2/top-headlines?country=${selectedCountry}&category=sports&apiKey=${apiKey}`;
 
     fetch(url)
       .then(response => response.json())
@@ -26,11 +40,14 @@ export function SportCategory() {
       .catch(error => {
         console.error('Error fetching data:', error);
       });
-  }, []);
+  }, [selectedCountry]);
 
   const handleClick = (url) => {
     // Use history.push to navigate to the detailed news page
     navigate(`/news/detail?url=${encodeURIComponent(url)}`);
+  };
+  const handleCountryClick = (countryCode) => {
+    setSelectedCountry(countryCode);
   };
 
   return (

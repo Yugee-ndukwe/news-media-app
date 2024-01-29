@@ -3,13 +3,19 @@ import {Container, Row, Col} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
 import { FaUserCircle } from "react-icons/fa";
 // import ReactForms from './ReactForms';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
+import {Navbar,Nav} from 'react-bootstrap';
 import './navbar.css'
 
-export function BasicExample({onCategoryChange}) {
-  const [category, setCategory] = useState('general')
+export function BasicExample({setCategory}) {
+  // const [category, setCategory] = useState('general')
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const [activeKey, setActiveKey] = useState('general');
+  const categories = ['general', 'business', 'technology', 'health', 'science', 'sports', 'entertainment'];
+
+  const handleSelect = (eventKey) => {
+    // Do something when a NavItem is selected
+    setActiveKey(eventKey);
+  }
 
   const handleJoinCommunityClick = () => {
     setIsFormOpen(true);
@@ -19,77 +25,86 @@ export function BasicExample({onCategoryChange}) {
     setIsFormOpen(false);
   };
 
-  const handleCategoryClick = (category) => {
-    // Call the callback function to update the category in the parent component
-    onCategoryChange(category);
-  };
+  // const handleCategoryClick = (category) => {
+  //   // Call the callback function to update the category in the parent component
+  //   onCategoryChange(category);
+  // };
+
+  
     return (
     
-      // <Navbar expand="lg" bg="dark">
-      //   <Container>
-      //     <Navbar.Brand as={Link} to="/" className="text-light">
-      //       News<span className="badge bg-danger">&Media</span>
-      //     </Navbar.Brand>
-      //     <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      //     <Navbar.Collapse id="basic-navbar-nav">
-      //       <Nav className="me-auto">
-      //         <Nav.Link as={Link} to="" className="text-light">
-      //           Home
-      //         </Nav.Link>
-      //         <Nav.Link as={Link} to="/news" className="text-light">
-      //           Technology
-      //         </Nav.Link>
-      //         <ul>
-      //       <li><Link to="/category/business">Business</Link></li>
-      //       <li><Link to="/category/entertainment">Entertainment</Link></li>
-      //       <li><Link to="/category/health">Health</Link></li>
-      //       {/* Add more categories as needed */}
-      //     </ul>
-      //       </Nav>
-      //     </Navbar.Collapse>
-      //   </Container>
-      // </Navbar>
-      <>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary main-nav"  data-bs-theme="dark">
-  <div className="container-fluid">
-    <a className="navbar-brand logo1" href="#"><span>N&M</span></a>
-    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span className="navbar-toggler-icon"></span>
-    </button>
-    <div className="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul className="navbar-nav m-auto mb-2 mb-lg-0">
-      <li className="nav-item category">
-  <Link to="/category/general" className="nav-link " aria-current="page">General</Link>
-</li>
-<li className="nav-item category">
-  <Link to="/category/technology" className="nav-link  firstNav">Technology</Link>
-</li>
-<li class="nav-item category">
-  <Link to="/category/health" className="nav-link">Health</Link>
-</li>
-<li class="nav-item category">
-  <Link to="/category/sports" className="nav-link">Sports</Link>
-</li>
-<li class="nav-item category">
-  <Link to="/category/entertainment" className="nav-link">Entertainment</Link>
-</li>
-<li class="nav-item category">
-  <Link to="/category/science" className="nav-link">Science</Link>
-</li>
-<li class="nav-item category">
-  <Link to="/category/business" className="nav-link">Business</Link>
-</li>
-<li class="nav-item category ms-5 mx-5" >
-  <Link to='/pages' className="nav-link" onClick={handleJoinCommunityClick}>
-      <FaUserCircle style={{ width: '20px', color: '#fff' }} /> Join Our Community
-  </Link>
-</li>
+     
 
-      </ul>
-      
-    </div>
-  </div>
-</nav>
+      <>
+      {/* <Navbar expand="lg" bg="dark" sticky="top">
+        <div className="container-fluid">
+      <Navbar.Brand as={Link} to="/">
+        <span className="logo1">N&M</span>
+      </Navbar.Brand>
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <Navbar.Collapse id="basic-navbar-nav">
+        <Nav className="m-auto" variant='underline'activeKey={activeKey}
+      onSelect={handleSelect}>
+          <Nav.Link  as={Link} to="/category/general" className="text-light list" aria-active onClick={() => handleCategoryClick('general')}>
+            General
+          </Nav.Link>
+          <Nav.Link eventKey={'technology'} as={Link} to="/category/technology" className="text-light list" onClick={() => handleCategoryClick('technology')}>
+            Technology
+          </Nav.Link>
+          <Nav.Link eventKey={'health'} as={Link} to="/category/health" className="text-light list" onClick={() => handleCategoryClick('health')}>
+            Health
+          </Nav.Link>
+          <Nav.Link eventKey={'sport'} as={Link} to="/category/sports" className="text-light list" onClick={() => handleCategoryClick('sports')}>
+            Sports
+          </Nav.Link>
+          <Nav.Link eventKey={'entertainment'} as={Link} to="/category/entertainment" className="text-light list" onClick={() => handleCategoryClick('entertainment')}>
+            Entertainment
+          </Nav.Link>
+          <Nav.Link eventKey={'science'} as={Link} to="/category/science" className="text-light list" onClick={() => handleCategoryClick('science')}>
+            Science
+          </Nav.Link>
+          <Nav.Link eventKey={'business'} as={Link} to="/category/business" className="text-light list" onClick={() => handleCategoryClick('business')}>
+            Business
+          </Nav.Link>
+        </Nav>
+        <Nav>
+          <Nav.Link eventKey={'join our community'} as={Link} to='/pages' className="text-light list" onClick={handleJoinCommunityClick}>
+            <FaUserCircle style={{ width: '20px', color: '#fff' }} /> Join Our Community
+          </Nav.Link>
+        </Nav>
+      </Navbar.Collapse>
+      </div>
+    </Navbar>
+ */}
+
+    <Navbar expand="lg" bg="dark" sticky= 'top'className="categoryNav">
+        <div className="container-fluid ">
+          <Navbar.Brand as={Link} to="/">
+            <span className="logo1">N&M</span>
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="m-auto" variant='underline' activeKey={activeKey} onSelect={handleSelect}>
+              {categories.map((category) => (
+                <Nav.Link
+                  key={category}
+                  eventKey={category}
+                  as={Link}
+                  className={`text-light list${activeKey === category ? ' active' : ''}`}
+                  onClick={() => setCategory(category)}
+                >
+                  {category.charAt(0).toUpperCase() + category.slice(1)}
+                </Nav.Link>
+              ))}
+            </Nav>
+            <Nav>
+              <Nav.Link eventKey={'join our community'} as={Link} to='/pages' className="text-light list" onClick={handleJoinCommunityClick}>
+                <FaUserCircle style={{ width: '20px', color: '#fff' }} /> Join Our Community
+              </Nav.Link>
+            </Nav>
+          </Navbar.Collapse>
+        </div>
+      </Navbar>
 
 </>
 );

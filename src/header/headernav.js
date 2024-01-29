@@ -1,9 +1,15 @@
 // HeaderNav.js
 import React from 'react';
+import {useState} from 'react'
 import './headernav.css'
+import { Navbar,Nav, NavLink } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { WorldNews } from '../Component/Body/world';
 import VID from '../assests/Video.png'
 
-export function HeaderNav({ setSelectedCountry }) {
+export function HeaderNav({ setCountry, onCategoryChange }) {
+  const [activeKey, setActiveKey] = useState('');
+
   const countryNames = {
     us: 'United States',
     gb: 'United Kingdom',
@@ -18,34 +24,62 @@ export function HeaderNav({ setSelectedCountry }) {
   };
 
   const handleCountryClick = (countryCode) => {
-    if (setSelectedCountry) {
-      setSelectedCountry(countryCode);
-    }
+   setCountry(countryCode)
   };
-
+  // const  handleCategoryChange = (category)=>{
+  //   if(onCategoryChange){
+  //     onCategoryChange(selectedCountry,category);
+  //   }
+  // }
   return (
     <>
-      <nav className="navbar navbar-expand-lg  header-nav">
-      <div className='container-fluid'>
-      <a class="navbar-brand news" href="#">NEWS</a>
-      <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span className="navbar-toggler-icon"></span>
-    </button>
-      <div className="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul  className="navbar-nav ms-auto mb-2 mb-lg-0">
-        {Object.keys(countryNames).map((countryCode) => (
-          <li  className="nav-item country mx-3" key={countryCode} onClick={() => handleCountryClick(countryCode)}>
-            {countryNames[countryCode]}
-          </li>
-        ))}
-      </ul>
-    </div>
-      </div>
-      </nav>
+     <header>
 
-      <div>
-          <img src={VID} style={{width: '100%'}} alt='vid'/>
-      </div>
+      <Navbar expand="lg">
+    <div className="container-fluid bg-warning custom-nav">
+    <Navbar.Brand as={Link} to="#" className="news">NEWS</Navbar.Brand>
+    <Navbar.Toggle aria-controls="navbarSupportedContent" />
+    <Navbar.Collapse id="navbarSupportedContent">
+      <Nav className="ms-auto mb-2 mb-lg-0" variant='underline' activeKey={activeKey}>
+        {Object.keys(countryNames).map((countryCode) => (
+          <Nav.Link
+            as="li"
+            className={`nav-item country mx-2 ${activeKey === countryCode ? 'active' : ''}`}
+            key={countryCode}
+            onClick={() => setCountry(countryCode)}
+          >
+            {countryNames[countryCode]}
+          </Nav.Link>
+        ))}
+      </Nav>
+    </Navbar.Collapse>
+  </div>
+</Navbar>
+
+
+      
+      </header> 
+
+      {/* <header className="">
+        <div className="container-fluid bg-warning custom-nav">
+          <Link to="#" className="news" style={{textDecoration: 'none'}}>
+            <span className='fs-2'>NEWS</span>
+          </Link>
+          <Nav className="me-auto mb-2 mb-lg-0 link">
+            {Object.keys(countryNames).map((countryCode) => (
+             <NavLink className=''>
+              <Link
+                key={countryCode}
+                className="nav-item country"
+                onClick={() => setCountry(countryCode)}
+               style={{textDecoration: 'none'}}>
+                {countryNames[countryCode]}
+              </Link>
+             </NavLink>
+            ))}
+          </Nav>
+        </div>
+      </header> */}
     </>
   );
 }

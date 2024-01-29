@@ -6,10 +6,17 @@ import { useNavigate } from "react-router-dom";
 import { HeaderNav } from "../../header/headernav";
 import { Footer } from "../footer/footer";
 import { Savednews } from "./savednews";
+import { NewsSource } from "./newswrapper";
+import { WorldNews } from "./world";
+import Spinner from 'react-bootstrap/Spinner';
+import Alert from 'react-bootstrap/Alert'
 
-export function NewsBoard() {
-  const [articles, setArticles] = useState([]);
-  const [selectedCountry, setSelectedCountry] = useState('us'); // Default country is 'us'
+export function NewsBoard({onCategoryChange}) {
+   const [articles, setArticles] = useState([]);   //state for fetching news
+  const [country, setCountry] = useState('us'); // Default country is 'us'
+  const [category, setCategory] = useState('general'); //Default category
+  const [loading, setLoading] = useState(true)  // state to show loading
+  const [errorMessage, setErrorMeassage] = useState(false) //state to handle error
   const navigate = useNavigate();
 
   const countryNames = {
@@ -25,13 +32,16 @@ export function NewsBoard() {
     it: 'Italy',
   };
 
+  const categories = ['general', 'business', 'technology', 'health', 'science', 'sports', 'entertainment'];
+
+  // state for mounting the fetched news
   useEffect(() => {
     const apiKey = 'cc574f9456b9456787947bc79900f612';
-    // const url = `https://newsapi.org/v2/top-headlines?country=${selectedCountry}&apiKey=${apiKey}`;
+    const url = `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&apiKey=${apiKey}`;
     // const apiUrl = `https://cors-anywhere.herokuapp.com/https://newsapi.org/v2/top-headlines?country=${selectedCountry}&apiKey=${apiKey}`;
 
     // const apiUrl = `https://cors.bridged.cc/https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`;
-    const apiUrl = `https://cors-anywhere.whoer.net/https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`;
+    // const apiUrl = `https://cors-anywhere.whoer.net/https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`;
 
 
     const requestOptions = {
@@ -44,52 +54,75 @@ export function NewsBoard() {
 
     }
 
-    fetch(apiUrl, requestOptions)
+    fetch(url)
+    // fetch(apiUrl,requestOptions)
       .then(response => response.json())
       .then(data => {
         if (data.articles) {
           setArticles(data.articles);
+          setLoading(false)
+          setErrorMeassage(false)
         } else {
           console.error('Error: Data.articles is undefined or null');
         }
       })
       .catch(error => {
+        setLoading(true)
+        setErrorMeassage(true)
         console.error('Error fetching data:', error);
       });
-  }, [selectedCountry]);
+  }, [country, category]);
 
   const handleClick = (url) => {
-    // Use history.push to navigate to the detailed news page
+    //  navigate to the detailed news page
     navigate(`/news/detail?url=${encodeURIComponent(url)}`);
   };
 
-  const handleCountryClick = (countryCode) => {
-    setSelectedCountry(countryCode);
-  };
+  // const handleCountryClick = (countryCode) => {
+  //   setSelectedCountry(countryCode);
+  // };
+
+  // const handleCategoryChange = (countryCode,category)=>{
+  //   setSelectedCountry(countryCode)
+  //   setSelectedCategory(category)
+  // }
 
   return (
     <>
-      <BasicExample />
-      <HeaderNav setSelectedCountry={setSelectedCountry} />
+       <BasicExample setCategory={setCategory}/>
+      <HeaderNav setCountry={setCountry}/>
+     {/* <WorldNews/> */}
+     <NewsSource/>
+
+
       <div>
-      <h5 style={{textAlign: 'center'}}>
-        Today in {countryNames[selectedCountry]}
-      </h5>
+      <h5 style={{ textAlign: 'center', marginTop:'20px' }}>
+          Today in {countryNames[country]} - {category} News
+        </h5>
       </div>
       <div className="container-fluid my-3">
         <div className="row">
           <div className="d-flex flex-wrap justify-content-around">
-            {articles.map((news, index) => (
-              <NewsItem
-                key={index}
-                title={news.title}
-                description={news.description}
-                content={news.content}
-                src={news.urlToImage}
-                url={news.url}
-                onClick={() => handleClick(news.url)}
-              />
-            ))}
+          {loading ? (
+              <Spinner animation="border" />
+            ) : (
+              articles.map((news, index) => (
+                <NewsItem
+                  key={index}
+                  title={news.title}
+                  description={news.description}
+                  content={news.content}
+                  src={news.urlToImage}
+                  url={news.url}
+                  onClick={() => handleClick(news.url)}
+                />
+              ))
+            )}
+             {errorMessage && (
+              <Alert variant="danger">
+                {errorMessage.message || 'Failed to connect'}
+              </Alert> 
+             )} 
           </div>
         </div>
       </div>
