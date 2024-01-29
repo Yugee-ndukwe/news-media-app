@@ -43,11 +43,11 @@ export function Thread ({ post, index, commentSectionVisible, selectedPostIndex,
      style={{fontSize: '20px'}}
       onClick={() => {
         toggleCommentSection(index);
-        handleIncreasecount(); // Call the function when the chat icon is clicked
+        // handleIncreasecount(); // Call the function when the chat icon is clicked
       }}
      
     />
-    {/* <span>{count}</span> */}
+    <span>{count}</span>
     <AiOutlineLike
     onClick={() => handleChangeColor()}
       style={{fontSize: '22px'}}
@@ -73,13 +73,13 @@ export function Thread ({ post, index, commentSectionVisible, selectedPostIndex,
               <div className="like-reply">
               <button onClick={() => handleIncreasecount()} className="like">Like</button>
                 <button onClick={() => {
-        toggleCommentSection();
-        handleIncreasecount(); // Call the function when the chat icon is clicked
+        // toggleCommentSection();
+        // handleIncreasecount(); // Call the function when the chat icon is clicked
       }} className="reply">Reply</button>
               </div>
             </div>
           ))}
-          <form onSubmit={handleCommentSubmit(index, commentContent, setCommentContent)} className="comment-form">
+          <form onSubmit={handleCommentSubmit(index, commentContent, setCommentContent,handleIncreasecount)} className="comment-form">
             <textarea
               value={commentContent}
               onChange={(e) => setCommentContent(e.target.value)}
