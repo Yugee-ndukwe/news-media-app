@@ -37,7 +37,7 @@ export function NewsBoard({onCategoryChange}) {
   // state for mounting the fetched news
   useEffect(() => {
     const apiKey = 'cc574f9456b9456787947bc79900f612';
-    const url = `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&apiKey=${apiKey}`;
+    const url = `http://newsapi.org/v2/top-headlines?country=${country}&category=${category}&apiKey=${apiKey}`;
     // const apiUrl = `https://cors-anywhere.herokuapp.com/https://newsapi.org/v2/top-headlines?country=${selectedCountry}&apiKey=${apiKey}`;
 
     // const apiUrl = `https://cors.bridged.cc/https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`;
