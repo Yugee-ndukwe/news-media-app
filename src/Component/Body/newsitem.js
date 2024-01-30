@@ -122,10 +122,10 @@ const formatTime = (timestamp) => {
               <FaShare className='btnShare'/>
               {/* <FaWhatsapp/> */}
             </button>
-            <button onClick={toggleCommentSection} className="btn1">
+            {/* <button onClick={toggleCommentSection} className="btn1">
               <FaComment className='btnComment'/>
               <span>{comments.length}</span>
-            </button>
+            </button> */}
             <button onClick={increaseCount} className="btn1">
               <AiTwotoneLike className='btnLike'/>
               <span>{count}</span>

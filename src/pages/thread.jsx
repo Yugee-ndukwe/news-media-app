@@ -9,6 +9,7 @@ import { LuSendHorizonal } from "react-icons/lu";
 export function Thread ({ post, index, commentSectionVisible, selectedPostIndex, toggleCommentSection, handleCommentSubmit,count, handleIncreasecount, handleChangeColor, authenticatedUser, onProfileEditClick }) {
     const [commentContent, setCommentContent] = useState('');
     console.log('authenticatedUser in Thread:', authenticatedUser);
+    
 
     const username = localStorage.getItem('username');
 
@@ -47,11 +48,12 @@ export function Thread ({ post, index, commentSectionVisible, selectedPostIndex,
       }}
      
     />
-    <span>{count}</span>
+    
     <AiOutlineLike
-    onClick={() => handleChangeColor()}
+    onClick={() => handleIncreasecount()}
       style={{fontSize: '22px'}}
     />
+    <span>{count}</span>
      </div>
       </div>
       
@@ -71,10 +73,11 @@ export function Thread ({ post, index, commentSectionVisible, selectedPostIndex,
                 
               </div>
               <div className="like-reply">
-              <button onClick={() => handleIncreasecount()} className="like">Like</button>
+              <button className="like">Like</button>
                 <button onClick={() => {
-        // toggleCommentSection();
-        // handleIncreasecount(); // Call the function when the chat icon is clicked
+        // Add an authenticated username to the textarea when replying a comment
+        const replyUsername = comment.username || authenticatedUser.username; 
+             setCommentContent(`@${replyUsername} `);
       }} className="reply">Reply</button>
               </div>
             </div>

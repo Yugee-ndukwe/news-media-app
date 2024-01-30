@@ -54,29 +54,48 @@ export function Forum() {
     }
   };
 
-  const handleCommentSubmit = (postId, commentContent, setCommentContent) => (event) => {
-    event.preventDefault();
+  // In your Forum component file
+const handleCommentSubmit = (postId, commentContent, setCommentContent, parentCommentIndex = null, parentUsername = null) => (event) => {
+  event.preventDefault();
 
-    if (commentContent.trim() !== '') {
-      const updatedPosts = posts.map((post, index) => {
-        if (index === postId) {
-          return {
-            ...post,
-            comments: [
+  if (commentContent.trim() !== '') {
+    const updatedPosts = posts.map((post, index) => {
+      if (index === postId) {
+        return {
+          ...post,
+          comments: parentCommentIndex !== null ? (
+            // If parentCommentIndex is provided, it's a reply to a comment
+            post.comments.map((comment, commentIndex) => {
+              if (commentIndex === parentCommentIndex) {
+                return {
+                  ...comment,
+                  replies: [
+                    ...comment.replies,
+                    { content: `@${parentUsername || authenticatedUser.username} ${commentContent}`, timestamp: new Date().toLocaleString(), avatar: userAvatar },
+                  ],
+                };
+              }
+              return comment;
+            })
+          ) : (
+            // If parentCommentIndex is null, it's a new comment on the post
+            [
               ...post.comments,
-              { content: commentContent, timestamp: new Date().toLocaleString(), avatar: userAvatar },
-            ],
-          };
-        }
-        return post;
-      });
+              { content: commentContent, timestamp: new Date().toLocaleString(), avatar: userAvatar, replies: [] },
+            ]
+          ),
+        };
+      }
+      return post;
+    });
 
-      setPosts(updatedPosts);
-      setCommentContent('');
+    setPosts(updatedPosts);
+    setCommentContent('');
 
-      localStorage.setItem('posts', JSON.stringify(updatedPosts));
-    }
-  };
+    localStorage.setItem('posts', JSON.stringify(updatedPosts));
+  }
+};
+
 
   const toggleCommentSection = (index) => {
     setCommentSectionVisible(!commentSectionVisible);
@@ -149,6 +168,7 @@ export function Forum() {
                   authenticatedUser={authenticatedUser}
                   // showProfileEdit={() => showProfileEdit(authenticatedUser)}
                   onProfileEditClick={handleProfileEditClick}
+                  
                 />
               ))}
             </div>
