@@ -6,11 +6,12 @@ import { MdChat } from "react-icons/md";
 import { AiOutlineLike } from "react-icons/ai";
 import { LuSendHorizonal } from "react-icons/lu";
 
-export function Thread ({ post, index, commentSectionVisible, selectedPostIndex, toggleCommentSection, handleCommentSubmit,count, handleIncreasecount, handleChangeColor, authenticatedUser, onProfileEditClick }) {
+export function Thread ({ post, index, commentSectionVisible, selectedPostIndex, toggleCommentSection, handleCommentSubmit,count,comment, handleIncreasecount, handleChangeColor, authenticatedUser, onProfileEditClick }) {
     const [commentContent, setCommentContent] = useState('');
     console.log('authenticatedUser in Thread:', authenticatedUser);
+    console.log(count)
     
-
+  
     const username = localStorage.getItem('username');
 
     // const handleProfileEditClick = () => {
@@ -46,11 +47,10 @@ export function Thread ({ post, index, commentSectionVisible, selectedPostIndex,
         toggleCommentSection(index);
         // handleIncreasecount(); // Call the function when the chat icon is clicked
       }}
-     
     />
-    
+    <span>{comment}</span>
     <AiOutlineLike
-    onClick={() => handleIncreasecount()}
+    onClick={() => handleChangeColor()}
       style={{fontSize: '22px'}}
     />
     <span>{count}</span>

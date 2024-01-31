@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Thread } from './thread';
 import './forum.css';
+import { IoMdArrowBack } from "react-icons/io";
+import { Link } from 'react-router-dom';
 
 export function Forum() {
   const [posts, setPosts] = useState([]);
@@ -10,30 +12,27 @@ export function Forum() {
   const [commentSectionVisible, setCommentSectionVisible] = useState(false);
   const [selectedPostIndex, setSelectedPostIndex] = useState(null);
   const [count, setCount] = useState(0);
-  const [color, setColor] = useState('white');
+  const [comment, setComment] = useState(0);
+  const [isLike, setIsLike] = useState(false)
   const [authenticatedUser, setAuthenticatedUser] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     const storedPosts = JSON.parse(localStorage.getItem('posts')) || [];
     setPosts(storedPosts);
-
+  
+    const storedCommentCount = localStorage.getItem('commentCount');
+    setComment(storedCommentCount ? parseInt(storedCommentCount, 10) : 0);
+  
     const storedUsername = localStorage.getItem('authenticatedUser');
-      setAuthenticatedUser({ username: storedUsername });
-
-      if (storedUsername) {
-        const parsedUser = JSON.parse(storedUsername);
-        setAuthenticatedUser(parsedUser);
-      }
-
-    
-    // Ensure storedUsername is not null or undefined before setting authenticatedUser
-    // if (storedUsername) {
-    //   setAuthenticatedUser({ username: storedUsername });
-    // } else {
-    //   console.log('Username not found in localStorage.');
-    // }
+    setAuthenticatedUser({ username: storedUsername });
+  
+    if (storedUsername) {
+      const parsedUser = JSON.parse(storedUsername);
+      setAuthenticatedUser(parsedUser);
+    }
   }, []);
+  
 
   const handlePostSubmit = (event) => {
     event.preventDefault();
@@ -55,7 +54,7 @@ export function Forum() {
   };
 
   // In your Forum component file
-const handleCommentSubmit = (postId, commentContent, setCommentContent, parentCommentIndex = null, parentUsername = null) => (event) => {
+const handleCommentSubmit = (postId, commentContent, setCommentContent, handleIncreasecount, parentCommentIndex = null, parentUsername = null) => (event) => {
   event.preventDefault();
 
   if (commentContent.trim() !== '') {
@@ -86,6 +85,7 @@ const handleCommentSubmit = (postId, commentContent, setCommentContent, parentCo
           ),
         };
       }
+      // handleIncreasecount()
       return post;
     });
 
@@ -93,6 +93,7 @@ const handleCommentSubmit = (postId, commentContent, setCommentContent, parentCo
     setCommentContent('');
 
     localStorage.setItem('posts', JSON.stringify(updatedPosts));
+    handleIncreasecount()
   }
 };
 
@@ -103,11 +104,19 @@ const handleCommentSubmit = (postId, commentContent, setCommentContent, parentCo
   };
 
   const handleIncreasecount = () => {
-    setCount(count + 1);
+    // setCount(count + 1);
+    setComment(comment + 1)
   };
 
   const handleChangeColor = () => {
-    setColor(color === 'white' ? 'blue' : 'white');
+    if(!isLike){
+      // setColor("blue")
+      // console.log(color)
+      setCount(count + 1)
+      console.log(count)
+      setIsLike(true)
+    }
+    // setColor(color === 'white' ? 'blue' : 'white');
   };
 
   // const showProfileEdit = (user) => {
@@ -134,6 +143,9 @@ const handleCommentSubmit = (postId, commentContent, setCommentContent, parentCo
   return (
     <>
       <div className="container-fluid forum-page">
+      <Link to='/'>
+      <button className='btn-back my-2'><IoMdArrowBack style={{fontSize: '30px'}}/></button>
+      </Link>
         <div className="row justify-content-center">
           <h1>Discussion Page</h1>
           <h6>N&M CHANNEL</h6>
@@ -164,6 +176,8 @@ const handleCommentSubmit = (postId, commentContent, setCommentContent, parentCo
                   toggleCommentSection={toggleCommentSection}
                   handleCommentSubmit={handleCommentSubmit}
                   handleIncreasecount={handleIncreasecount}
+                  count={count}
+                  comment={comment}
                   handleChangeColor={handleChangeColor}
                   authenticatedUser={authenticatedUser}
                   // showProfileEdit={() => showProfileEdit(authenticatedUser)}

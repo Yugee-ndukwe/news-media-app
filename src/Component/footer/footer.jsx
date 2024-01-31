@@ -22,26 +22,32 @@ export function Footer(){
                         <p  className="category">Business</p>
                         <p  className="category">Science</p>
                     </div>
-                    <div className="col-lg-10 secondRow">
-                        <p>Uk</p>
-                        <p>Nigeria</p>
-                        <p>France</p>
-                        <p>China</p>
-                        <p>Iran</p>
-                        <p></p>
+                    <div className="col-10 col-lg-10 secondRow">
+                        <ul>
+                        <li>Us</li>
+                        <li>Uk</li>
+                        <li>Canada</li>
+                        <li>Australia</li>
+                        <li>Nigeria</li>
+                        <li>China</li>
+                        <li>Mexico</li>
+                        <li>UAE</li>
+                        <li>Russia</li>
+                        <li>Italy</li>
+                        </ul>
                     </div>
                     
-                    <div className="  contact">
+                    <div className="col-11 col-lg-10  contact">
                         <p>Contact Us<span> @ ugonmandukwe@gmail.com</span></p>
                     </div>
                     <div>
-                    <div className="social">
+                    <div className="col-10 col-lg-10 social">
                         <FaFacebook/>
                        <FaWhatsapp/>
                        <FaInstagram/>
                         </div>
                     </div>
-                    <div className="copyright">
+                    <div className="col-10 col-lg-10 copyright">
                     <span>&#169; Copyright 2024, Yugee Ndukwe</span>
                     </div>  
                 </div>

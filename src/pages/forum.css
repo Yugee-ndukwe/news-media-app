@@ -1,3 +1,11 @@
+.btn-back{
+    border: 0;
+    outline: 0;
+    width: 50px;
+    height: 50px;
+    background-color: azure;
+}
+
 .forum-page{
     background: #d8c3f4;
     height: 1000px;
