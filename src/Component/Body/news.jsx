@@ -103,7 +103,6 @@
 // }
 
 import React, { useState, useEffect } from "react";
-import { NewsItem } from "./newsitem";
 
 export function News() {
   const [articles, setArticles] = useState([]);
@@ -162,18 +161,14 @@ export function News() {
     <div className="container">
       <div className="row">
         <div className="col-lg 4">
-          { articles.map((news, index) => (
-                <NewsItem
-                  key={index}
-                  title={news.title}
-                  description={news.description}
-                  content={news.content}
-                  src={news.image_url}
-                  url={news.link}
-                  onClick={() => handleClick(news.url)}
-                />
-              ))
-          }
+          {articles.map((news,index) => (
+            <div key={index}>
+              <h3>{news.title}</h3>
+              <p>{news.description}</p>
+              <p>{news.content}</p>
+              <div>{news.link}</div>
+            </div>
+          ))}
           {/* {articles && articles.length > 0 ? (
           articles.map((news, index) => (
             <div key={index}>
