@@ -109,7 +109,7 @@ const formatTime = (timestamp) => {
   
   return (
     <>
-      <div className="card  mb-3  " style={{ maxWidth: '360px' }}>
+      <div className="card  mb-3  " style={{ maxWidth: '400px' }}>
         <img src={src ? src : News} style={{ width: '100%', height: '200px' }} className="card-img-top" alt="..." />
         <div className="card-body" style={{height:'300px'}}>
           <h5 className="card-title">{title ? title.slice(0,50) : 'No title was provided for this item '}</h5>
