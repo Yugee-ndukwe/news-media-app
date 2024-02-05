@@ -9,8 +9,8 @@ import './navbar.css'
 export function BasicExample({setCategory}) {
   // const [category, setCategory] = useState('general')
   const [isFormOpen, setIsFormOpen] = useState(false);
-  const [activeKey, setActiveKey] = useState('general');
-  const categories = ['general', 'business', 'technology', 'health', 'science', 'sports', 'entertainment'];
+  const [activeKey, setActiveKey] = useState('Top');
+  const categories = ['top', 'business', 'technology', 'health', 'science', 'sports','entertainment','politics','tourism'];
 
   const handleSelect = (eventKey) => {
     // Do something when a NavItem is selected

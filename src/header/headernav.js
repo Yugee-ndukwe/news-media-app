@@ -26,11 +26,7 @@ export function HeaderNav({ setCountry, onCategoryChange }) {
   const handleCountryClick = (countryCode) => {
    setCountry(countryCode)
   };
-  // const  handleCategoryChange = (category)=>{
-  //   if(onCategoryChange){
-  //     onCategoryChange(selectedCountry,category);
-  //   }
-  // }
+  
   return (
     <>
      <header>

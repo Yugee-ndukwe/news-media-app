@@ -11,7 +11,7 @@ import { WorldNews } from "./world";
 import Spinner from 'react-bootstrap/Spinner';
 import Alert from 'react-bootstrap/Alert'
 
-export function NewsBoard({onCategoryChange}) {
+export function NewsBoard() {
    const [articles, setArticles] = useState([]);   //state for fetching news
   const [country, setCountry] = useState('us'); // Default country is 'us'
   const [category, setCategory] = useState('top'); //Default category
@@ -27,16 +27,16 @@ export function NewsBoard({onCategoryChange}) {
     ca: 'Canada',
     au: 'Australia',
     ng: 'Nigeria',
-    // ch: 'China',
-    // mx: 'Mexico',
-    // ae: 'United Arab Emirates',
-    // ru: 'Russia',
-    // it: 'Italy',
+    ch: 'China',
+    mx: 'Mexico',
+    ae: 'United Arab Emirates',
+    ru: 'Russia',
+    it: 'Italy',
   };
 
   // const categories = ['general', 'business', 'technology', 'health', 'science', 'sports', 'entertainment'];
 
-  const categories = ['top', 'technology', 'health', 'science', 'sports'];
+  const categories = ['top','business', 'technology', 'health', 'science', 'sports','entertainment'];
 
   // state for mounting the fetched news
   useEffect(() => {
@@ -45,27 +45,8 @@ export function NewsBoard({onCategoryChange}) {
 
     const key = 'pub_3637223b3450a0cc3c8fb2ec67bf1b22e6e2b';
     const url = `https://newsdata.io/api/1/news?apikey=${key}&country=${country}&category=${category}`;
-  
-    // const apiUrl = `https://cors-anywhere.herokuapp.com/https://newsapi.org/v2/top-headlines?country=${selectedCountry}&apiKey=${apiKey}`;
-
-    // const apiUrl = `https://cors.bridged.cc/https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`;
-    // const apiUrl = `https://cors-anywhere.whoer.net/https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`;
-
-    const newsDataUrl = `https://newsdata.io/api/1/news?apikey=YOUR_API_KEY`
-
-
-    const requestOptions = {
-      method: 'GET',
-      headers: {
-        // 'X-Api-Key': apiKey
-        'X-Requested-With': 'XMLHttpRequest',
-        // 'Origin': 'https://news-media-app.vercel.app'
-      }
-
-    }
 
     fetch(url)
-    // fetch(apiUrl,requestOptions)
       .then(response => response.json())
       .then(data => {
         if (data.results) {
