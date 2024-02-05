@@ -101,3 +101,113 @@
 //     </>
 //   );
 // }
+
+import React, { useState, useEffect } from "react";
+import { NewsItem } from "./newsitem";
+
+export function News() {
+  const [articles, setArticles] = useState([]);
+  const [country,setCountry] = useState('us')
+
+  const countries = {
+    us: 'united state',
+    gb: 'united kingdom',
+    ca: 'canada',
+    ng: 'nigeria',
+    au: 'australia'
+  }
+
+  useEffect(() => {
+    const key = 'pub_3637223b3450a0cc3c8fb2ec67bf1b22e6e2b';
+    const url = `https://newsdata.io/api/1/news?apikey=${key}&country=${country}`;
+  
+    fetch(url)
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result)
+        setArticles(result.results)
+        if (result.articles && result.articles.length > 0) {
+          setArticles(result.articles);
+        } else {
+            console.warn('Warning: Data.articles is undefined, null, or empty');
+        }
+      })
+      .catch((err) => {
+        console.error('Error fetching data:', err);
+      });
+      // const getArticles =  async () => {
+      //   const response = await fetch(url)
+      //   const data = await response.json()
+      //   setArticles(data.articles)
+      // console.log(data)
+
+      // }
+      // getArticles()
+
+      // const getArticles = async () => {
+      //   try {
+      //     const response = await fetch(url);
+      //     const data = await response.json();
+      //     console.log(data); // Log the data to the console
+      //     setArticles(data.results);
+      //   } catch (error) {
+      //     console.error('Error fetching data:', error);
+      //   }
+      // };
+      // getArticles()
+      
+  }, []);
+  
+  return (
+    <div className="container">
+      <div className="row">
+        <div className="col-lg 4">
+          { articles.map((news, index) => (
+                <NewsItem
+                  key={index}
+                  title={news.title}
+                  description={news.description}
+                  content={news.content}
+                  src={news.image_url}
+                  url={news.link}
+                  onClick={() => handleClick(news.url)}
+                />
+              ))
+          }
+          {/* {articles && articles.length > 0 ? (
+          articles.map((news, index) => (
+            <div key={index}>
+              <h3>{news.title}</h3>
+              <p>{news.description}</p>
+              <p>{news.content}</p>
+              <div>{news.link}</div>
+            </div>
+          ))
+        ) : (
+          <p>Loading...</p>
+        )} */}
+           {/* {articles && articles.length === 0 ? (
+          <p>Loading...</p>
+        ) : (
+          articles.map((news, index) => (
+            <div key={index}>
+              <h3>{news.title}</h3>
+              <p>{news.description}</p>
+              <p>{news.content}</p>
+              <div>{news.link}</div>
+            </div>
+          ))
+        )} */}
+          {/* {articles.forEach((news,index)=>{
+            return(
+              <div key={index}>
+                <h3>{news.title}</h3>
+                <p>{news.description}</p>
+              </div>
+            )
+          })} */}
+        </div>
+      </div>
+    </div>
+  );
+}

@@ -23,7 +23,7 @@ function App() {
     
       <BrowserRouter>
         <Routes>
-          <Route path='/news' element={<BasicExample />}>General</Route>
+          {/* <Route path='/news' element={<BasicExample />}>General</Route> */}
           {/* <Route path='/' element= {NewsWrapper}></Route> */}
           {/* <Route path='/news'element={<HeaderNav/>}></Route> */}
           {/* <Route path='/' element={<News/>}></Route> */}
