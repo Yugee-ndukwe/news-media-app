@@ -56,7 +56,7 @@ export function NewsSource() {
                 </div>
                 <Carousel.Caption>
                   <h3>{article.title}</h3>
-                  <p>{article.description}</p>
+                  <p>{article.description ? article.description.slice(0,100) : 'There is no decription for this article'}</p>
                   <button className="btn-carousel" style={{ border: '0', outline: '0', height: '50px', width: '100px', borderRadius: '10px' }}>
                     <a href={article.link} target="_blank" rel="noopener noreferrer">
                       View More

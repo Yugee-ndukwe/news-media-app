@@ -17,6 +17,8 @@ export function NewsBoard() {
   const [category, setCategory] = useState('top'); //Default category
   const [loading, setLoading] = useState(true)  // state to show loading
   const [errorMessage, setErrorMeassage] = useState(false) //state to handle error
+  // const [currentPage, setCurrentPage] = useState(1);
+
   const navigate = useNavigate();
 
 
@@ -50,7 +52,7 @@ export function NewsBoard() {
       .then(response => response.json())
       .then(data => {
         if (data.results) {
-          setArticles(data.results);
+          setArticles((prevArticles) => [...prevArticles, ...data.results]);
           console.log(data)
           setLoading(false)
           setErrorMeassage(false)
@@ -63,6 +65,12 @@ export function NewsBoard() {
         setErrorMeassage(true)
         console.error('Error fetching data:', error);
       });
+
+       // Cleanup function
+    // return () => {
+    //   // Reset articles when the component unmounts
+    //   setArticles([]);
+    // };
   }, [country, category]);
 
   const handleClick = (url) => {
@@ -78,7 +86,23 @@ export function NewsBoard() {
   //   setSelectedCountry(countryCode)
   //   setSelectedCategory(category)
   // }
+  // const loadNextPage = () => {
+  //   setCurrentPage((prevPage) => prevPage + 1);
+  // };
 
+  // const loadPreviousPage = () => {
+  //   if (currentPage > 1) {
+  //     setCurrentPage((prevPage) => prevPage - 1);
+  //   }
+  // };
+
+  
+  // const loadNextPage = () => {
+  //   setCurrentPage(currentPage + 1);
+  //   setTimeout(() => {
+  //     // fetch next page news here
+  //   }, 1000); // wait for 1 second before fetching next page news
+  // };
   return (
     <>
        <BasicExample setCategory={setCategory}/>
@@ -89,7 +113,11 @@ export function NewsBoard() {
 
       <div>
       <h5 style={{ textAlign: 'center', marginTop:'20px' }}>
-          Today in {countryNames[country]} - {category} News
+      <span className="badge bg-danger fs-4">Latest</span>
+      News  {countryNames[country]} - {category} 
+          
+          {/* <span className="badge">{countryNames[country]} - {category}</span> */}
+
         </h5>
       </div>
       <div className="container-fluid my-3">

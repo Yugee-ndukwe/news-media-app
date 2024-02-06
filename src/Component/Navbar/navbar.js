@@ -77,7 +77,7 @@ export function BasicExample({setCategory}) {
     </Navbar>
  */}
 
-    <Navbar expand="lg" bg="dark" sticky= 'top'className="categoryNav">
+    <Navbar expand="lg" bg="dark" sticky= 'top'className="categoryNav"collapseOnSelect>
         <div className="container-fluid ">
           <Navbar.Brand as={Link} to="/">
             <span className="logo1">N&M</span>
