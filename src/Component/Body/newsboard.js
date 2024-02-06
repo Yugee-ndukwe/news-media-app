@@ -52,7 +52,7 @@ export function NewsBoard() {
       .then(response => response.json())
       .then(data => {
         if (data.results) {
-          setArticles((prevArticles) => [...prevArticles, ...data.results]);
+          setArticles(data.results);
           console.log(data)
           setLoading(false)
           setErrorMeassage(false)
