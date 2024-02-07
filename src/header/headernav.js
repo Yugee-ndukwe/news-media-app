@@ -7,7 +7,7 @@
  import { WorldNews } from '../Component/Body/world';
  import VID from '../assests/Video.png'
  
- export function HeaderNav({ setCountry, onCategoryChange }) {
+ export function HeaderNav({ setCountry }) {
    const [activeKey, setActiveKey] = useState('');
  
    const countryNames = {
@@ -26,35 +26,41 @@
    const handleCountryClick = (countryCode) => {
     setCountry(countryCode)
    };
-   
+
+   const handleSelect = (eventKey) => {
+    // Do something when a NavItem is selected
+    setActiveKey(eventKey);
+  }
    return (
      <>
-      <header>
- 
-       <Navbar expand="lg"collapseOnSelect>
-     <div className="container-fluid bg-warning custom-nav">
-     <Navbar.Brand as={Link} to="#" className="news">NEWS</Navbar.Brand>
-     <Navbar.Toggle aria-controls="navbarSupportedContent" />
-     <Navbar.Collapse id="navbarSupportedContent">
-       <Nav className="ms-auto mb-2 mb-lg-0" variant='underline' activeKey={activeKey}>
-         {Object.keys(countryNames).map((countryCode) => (
-           <Nav.Link
-             as="li"
-             className={`nav-item country mx-2 ${activeKey === countryCode ? 'active' : ''}`}
-             key={countryCode}
-             onClick={() => setCountry(countryCode)}
-           >
-             {countryNames[countryCode]}
-           </Nav.Link>
-         ))}
-       </Nav>
-     </Navbar.Collapse>
-   </div>
- </Navbar>
- 
- 
-       
-       </header> 
+        <header>
+    
+            <Navbar collapseOnSelect expand="lg" >
+                <div className="container-fluid bg-warning">
+                  <Navbar.Brand as={Link} to="#" className="news">
+                    NEWS
+                  </Navbar.Brand>
+                  <Navbar.Toggle aria-controls="navbarSupportedContent" />
+                  <Navbar.Collapse id="navbarSupportedContent">
+                    <Nav className="ms-auto mb-2 mb-lg-0" variant="underline" activeKey={activeKey}  onSelect={handleSelect}>
+                      {Object.keys(countryNames).map((countryCode) => (
+                        <Nav.Link
+                          as="li"
+                          className={`nav-item  ${activeKey === countryCode ? 'active' : ''}`}
+                          key={countryCode}
+                          onClick={() => {
+                            setCountry(countryCode);
+                            setActiveKey(countryCode);
+                          }}
+                        >
+                          {countryNames[countryCode]}
+                        </Nav.Link>
+                      ))}
+                    </Nav>
+                  </Navbar.Collapse>
+                </div>
+            </Navbar>   
+      </header> 
  
        {/* <header className="">
          <div className="container-fluid bg-warning custom-nav">
