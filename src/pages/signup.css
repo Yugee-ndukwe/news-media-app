@@ -5,10 +5,17 @@ body{
 .signUp{
     /* border: 1px solid #555; */
     margin: auto;
-    justify-content: center;
-    width: 30%;
+    /* justify-content: center; */
+    align-items: center;
+    /* width: 50px; */
     height: 500px;
     background-color:#fcfcfc;
+}
+
+.signup-form{
+    align-items: center;
+    text-align: center;
+    /* padding: 10px; */
 }
 
 .signUp h2{
@@ -21,23 +28,23 @@ body{
 .signUp label{
     align-items: center;
     gap: 10px;
-    margin-left: 20px;
+    /* margin-left: 20px; */
 }
 
 .signUp label input{
     margin-bottom: 15px;
-    width: 300px;
+    /* width: 300px; */
 }
-.signUp form{
+/* .signUp form{
     gap: 10px;
     background-color: rgb( #fcfc47, #555cde, #d45e83);
-}
+} */
 
-.signUp select{
+/* .signUp select{
     width: 300px;
     margin-bottom: 15px;
-}
-form button{
+} */
+.form-butn{
     /* align-items: center; */
     width: 100px;
     border-radius: 10px;
@@ -46,15 +53,26 @@ form button{
     height: 50px;
     /* display: flex; */
     /* justify-content: center; */
-    align-self: center;
+    /* align-self: center; */
     background-color: #555cde;
 
     color: #fcfcfc;
 
 }
+
+.acc-switch{
+    text-align: center;
+    text-decoration: none;
+}
 .form-btn{
     align-items: center;
-    margin-top: 20px;
+    /* margin-top: 20px;s */
+    text-align: center;
+}
+.profile-pix{
+    display: flex; 
+    flex-wrap: wrap;
+    justify-content: center; 
 }
 
 .join-btn{

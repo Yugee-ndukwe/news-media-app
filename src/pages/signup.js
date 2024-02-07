@@ -155,8 +155,8 @@ export function SignUp() {
           </div>
         ) : (
           <>
-            <h2>{isLoggingIn ? 'Login Page' : 'Sign Up Page'}</h2>
-            <form onSubmit={handleSubmit}>
+            <h2>{isLoggingIn ? 'Continue sharing your thought!!' : 'Become a member of our Channel'}</h2>
+            <form className='signup-form' onSubmit={handleSubmit}>
               {!isLoggingIn && (
                 <>
                   <label>
@@ -181,21 +181,21 @@ export function SignUp() {
                 <input type="password" name="password" value={formData.password} onChange={handleChange} required />
               </label>
               <br />
-              <label>
+              <label className='profile-pix'>
                 Upload Picture:
                 <input type="file" accept="image/*" onChange={handleChange}  />
               </label>
               <br />
               <div className="form-btn">
-                <button  type="submit">
+                <button  type="submit"className='form-butn'>
                   {isLoggingIn ? 'Login' : 'Sign Up'}
                 </button>
               </div>
             </form>
             <div>
-              <p>
+              <p className='acc-switch'>
                 {isLoggingIn ? 'New to N&M? ' : 'Already have an account? '}
-                <Link onClick={() => setIsLoggingIn(!isLoggingIn)}>
+                <Link onClick={() => setIsLoggingIn(!isLoggingIn)} >
                   {isLoggingIn ? 'Sign Up' : 'Login'}
                 </Link>
               </p>
