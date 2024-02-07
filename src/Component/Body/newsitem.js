@@ -46,9 +46,9 @@ export function NewsItem({ title, description, src, url, onClick }) {
   }
 
   const copyUrl = () =>{
-    const titleAndUrl = `${encodeURIComponent(title)}%0A%0D${encodeURIComponent(url)}`;;
+    const copiedText = `${title}\n${url}`;
     const urlElement = document.createElement('textarea');
-    urlElement.value = titleAndUrl;
+    urlElement.value = copiedText;
     document.body.appendChild(urlElement);
     urlElement.select();
     document.execCommand('copy');
