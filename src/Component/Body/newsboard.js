@@ -58,10 +58,12 @@ export function NewsBoard() {
           setErrorMeassage(false)
         } else {
           console.error('Error: Data.articles is undefined or null');
+        setLoading(true)
+
         }
       })
       .catch(error => {
-        setLoading(true)
+        setLoading(false)
         setErrorMeassage(true)
         console.error('Error fetching data:', error);
       });
