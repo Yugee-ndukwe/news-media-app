@@ -13,6 +13,11 @@
     font-weight: 50px;
 }
 
+.nav-item{
+    font-weight: 600;
+
+}
+
 /* .country:hover{
     border-bottom: 2px solid #fff;
     color: #435;

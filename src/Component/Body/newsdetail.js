@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 
 export function NewsDetail() {
   const location = useLocation();
-  const [news, setNews] = useState(null);
+  const [news, setNews] = useState([]);
 
   useEffect(() => {
     // Extract the URL parameter from the location object
@@ -26,7 +26,10 @@ export function NewsDetail() {
     fetch(url)
       .then(response => response.json())
       .then(data => {
-        setNews(data); // Set the detailed news information in the state
+       if(data.results){
+        console.log('API Response:', data);
+        setNews(data.results); // Set the detailed news information in the state
+       }
       })
       .catch(error => {
         console.error('Error fetching detailed news:', error);
@@ -40,10 +43,13 @@ export function NewsDetail() {
 
   return (
     <div>
-        <BasicExample/>
-      <h2>{news.title}</h2>
-      <p>{news.description}</p>
-      {/* Add other elements to display detailed news information */}
-    </div>
+    <BasicExample/>
+  <h2>{news.title}</h2>
+  <p>{news.description}</p>
+  {/* Add other elements to display detailed news information */}
+  <img src={news.src} alt="News" style={{ width: '100%', height: 'auto' }} />
+  <p>URL: <a href={news.url} target="_blank" rel="noopener noreferrer">{news.url}</a></p>
+  {/* Add more elements based on your news object structure */}
+</div>
   );
 }

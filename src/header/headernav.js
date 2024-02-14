@@ -2,13 +2,16 @@
  import React from 'react';
  import {useState} from 'react'
  import './headernav.css'
- import { Navbar,Nav, NavLink } from 'react-bootstrap';
+ import { Navbar,Nav,Container, Spinner,NavLink, NavbarToggle } from 'react-bootstrap';
  import { Link } from 'react-router-dom';
  import { WorldNews } from '../Component/Body/world';
- import VID from '../assests/Video.png'
+ import VID from '../assests/Video.png';
+ 
  
  export function HeaderNav({ setCountry }) {
    const [activeKey, setActiveKey] = useState('');
+  const [loading, setLoading] = useState(true)  // state to show loading
+
  
    const countryNames = {
      us: 'United States',
@@ -45,7 +48,7 @@
                     <Nav className="ms-auto mb-2 mb-lg-0" variant="underline" activeKey={activeKey}  onSelect={handleSelect}>
                       {Object.keys(countryNames).map((countryCode) => (
                         <Nav.Link
-                          as="li"
+                          as={Link}
                           className={`nav-item  ${activeKey === countryCode ? 'active' : ''}`}
                           key={countryCode}
                           onClick={() => {
@@ -61,27 +64,33 @@
                 </div>
             </Navbar>   
       </header> 
- 
-       {/* <header className="">
-         <div className="container-fluid bg-warning custom-nav">
-           <Link to="#" className="news" style={{textDecoration: 'none'}}>
-             <span className='fs-2'>NEWS</span>
-           </Link>
-           <Nav className="me-auto mb-2 mb-lg-0 link">
-             {Object.keys(countryNames).map((countryCode) => (
-              <NavLink className=''>
-               <Link
-                 key={countryCode}
-                 className="nav-item country"
-                 onClick={() => setCountry(countryCode)}
-                style={{textDecoration: 'none'}}>
-                 {countryNames[countryCode]}
-               </Link>
-              </NavLink>
-             ))}
-           </Nav>
-         </div>
-       </header> */}
+
+
+      {/* <Navbar collapseOnSelect expand="lg" className="bg-warning">
+      <Container>
+        <Navbar.Brand href="#home">NEWS</Navbar.Brand>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="ms-auto" variant="underline" activeKey={activeKey}  onSelect={handleSelect}>
+          {Object.keys(countryNames).map((countryCode) => (
+                         <Nav.Link
+                         as={Link}
+                         to={`#${countryCode}`}
+                         className={`nav-item ${activeKey === countryCode ? 'active' : ''}`}
+                         key={countryCode}
+                         onClick={() => {
+                           setCountry(countryCode);
+                           setActiveKey(countryCode);
+                         }}
+                       >
+                         {countryNames[countryCode]}
+                       </Nav.Link>
+                      ))}
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar> */}
+
      </>
    );
  }

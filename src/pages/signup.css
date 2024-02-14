@@ -21,8 +21,7 @@ body{
 .signUp h2{
     text-align: center;
     font-weight: 100;
-    font-family: arial;
-    font-style: oblique;
+    /* font-style: oblique; */
 }
 
 .signUp label{

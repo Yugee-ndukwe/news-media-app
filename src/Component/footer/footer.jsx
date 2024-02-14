@@ -10,11 +10,11 @@ export function Footer(){
         <>
         <footer>
             <div className="container my-4">
-                <div className="row my-4">
+                <div className="row my-5 py-5">
                     <p className="logo">N&M</p>
-                <h3 className="title">Explore our Channel</h3>
+                <h3 className="title my-3">Explore our Channel</h3>
                 {/* <hr /> */}
-                    <div className="col-10 col-lg-10 d-flex justify-content-evenly firstRow">
+                    <div className="col-10 col-lg-10 my-3 d-flex justify-content-evenly firstRow">
                         <p className="category">Technology</p>
                         <p  className="category">Health</p>
                         <p  className="category">Sport</p>
@@ -22,7 +22,7 @@ export function Footer(){
                         <p  className="category">Business</p>
                         <p  className="category">Science</p>
                     </div>
-                    <div className="col-10 col-lg-10 secondRow">
+                    <div className="col-10 col-lg-10 my-3 secondRow">
                         <ul>
                         <li>Us</li>
                         <li>Uk</li>
@@ -37,11 +37,11 @@ export function Footer(){
                         </ul>
                     </div>
                     
-                    <div className="col-11 col-lg-10  contact">
+                    <div className="col-11 col-lg-10 my-3  contact">
                         <p>Contact Us<span> @ ugonmandukwe@gmail.com</span></p>
                     </div>
                     <div>
-                    <div className="col-10 col-lg-10 social">
+                    <div className="col-10 col-lg-10 my-3 social">
                         <FaFacebook/>
                        <FaWhatsapp/>
                        <FaInstagram/>

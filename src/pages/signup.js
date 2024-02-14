@@ -23,6 +23,7 @@ export function SignUp() {
   const [authenticatedUser, setAuthenticatedUser] = useState(null);
   const [networkError, setNetworkError] = useState(false);
   const [users, setUsers] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -42,6 +43,8 @@ export function SignUp() {
     // Load users from local storage
     const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
     setUsers(storedUsers);
+
+   
   }, []);
 
   const handleSubmit = (e) => {
@@ -52,7 +55,10 @@ export function SignUp() {
       alert('No network connection. Please connect to the internet.');
       return;
     }
-  
+    
+     // Set loading state to true
+     setIsLoading(true);
+
     // Validate form data (you can add more validation logic)
     if (
       (!isLoggingIn &&
@@ -72,6 +78,8 @@ export function SignUp() {
     if (!isLoggingIn && isUsernameTaken) {
       alert('Username is already taken. Please choose another one.');
       return;
+    }else{
+     
     }
   
     // Display form data
@@ -87,6 +95,7 @@ export function SignUp() {
   
     if (!isLoggingIn) {
       setShowWelcomeMessage(true);
+      
       const newUser = { username: formData.username };
     setAuthenticatedUser(newUser);
       console.log('Setting authenticatedUser:', { username: formData.username });
@@ -124,6 +133,8 @@ export function SignUp() {
         navigate('/pages/forum');
       } else {
         alert('Invalid username or password');
+         // Set loading state to false
+       setIsLoading(false);
         return;
       }
     }
@@ -188,7 +199,14 @@ export function SignUp() {
               <br />
               <div className="form-btn">
                 <button  type="submit"className='form-butn'>
-                  {isLoggingIn ? 'Login' : 'Sign Up'}
+                  {isLoading ? (
+                    <Spinner  animation="border"/>
+                  ):(
+                    isLoggingIn ? 'Login' : 'Sign Up'
+                  )
+
+                  }
+                  {/* {isLoggingIn ? 'Login' : 'Sign Up'} */}
                 </button>
               </div>
             </form>

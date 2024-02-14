@@ -47,7 +47,9 @@ export function NewsBoard() {
 
     const key = 'pub_3637223b3450a0cc3c8fb2ec67bf1b22e6e2b';
     const url = `https://newsdata.io/api/1/news?apikey=${key}&country=${country}&category=${category}`;
+    setLoading(true); // Set loading to true when making a new request
 
+    
     fetch(url)
       .then(response => response.json())
       .then(data => {
@@ -76,8 +78,12 @@ export function NewsBoard() {
   }, [country, category]);
 
   const handleClick = (url) => {
-    //  navigate to the detailed news page
+    if(oncliclk){
+      onClick(url);
+       //  navigate to the detailed news page
     navigate(`/news/detail?url=${encodeURIComponent(url)}`);
+    }
+   
   };
 
   // const handleCountryClick = (countryCode) => {
@@ -136,6 +142,7 @@ export function NewsBoard() {
                 content={news.content}
                 src={news.image_url}
                 url={news.link}
+                // videoUrl={news.video_url} 
                 onClick={() => handleClick(news.url)}
               />
               ))

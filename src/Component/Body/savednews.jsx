@@ -20,17 +20,21 @@ export function Savednews() {
         {savedNews.length > 0 && (
           <Row className="mx-5">
             {savedNews.map((savedNewsItem, index) => (
-              <Col key={index} sm={8}  lg={6}>
+              <Col key={index} sm={10}  lg={6}>
                 <div className="news-container">
                   <div className="liked">
-                    <div className="saved-news-item" style={{ display: 'flex', gap: '12px' }}>
-                      <div>
-                        <img src={savedNewsItem.src ? savedNewsItem.src : News} alt="src" style={{ width: '90px', height: '70px' }} />
+                    <div className="saved-news-item" >
+                      <div className="saved-news-image">
+                        <img src={savedNewsItem.src ? savedNewsItem.src : News} alt="src" style={{  }} />
                       </div>
-                      <div style={{ width: '70%' }}>
+                      <div className="saved-title">
                         <h6>{savedNewsItem.title ? savedNewsItem.title.slice(0,50) : 'No Title provided for this News'}</h6>
                         {savedNewsItem.url && (
-                          <a href={savedNewsItem.url}>{savedNewsItem.url}</a>
+                          <div className="saved-url-container">
+                            <a href={savedNewsItem.url} target="_blank" rel="noopener noreferrer">
+                              {window.innerWidth <= 500 ? savedNewsItem.url.slice(0, 30) + '...' : savedNewsItem.url}
+                            </a>
+                            </div>
                         )}
                         <p>{savedNewsItem.author}</p>
                         {/* <p>{savedNews.publishdAt}</p> */}
