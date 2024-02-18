@@ -21,7 +21,7 @@
      ng: 'Nigeria',
      ch: 'China',
      mx: 'Mexico',
-     ae: 'United Arab Emirates',
+     ae: 'Iraq',
      ru: 'Russia',
      it: 'Italy',
    };

@@ -18,6 +18,10 @@
 
 }
 
+.nav-item:hover{
+    cursor: pointer;
+}
+
 /* .country:hover{
     border-bottom: 2px solid #fff;
     color: #435;

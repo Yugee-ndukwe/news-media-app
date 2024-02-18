@@ -21,6 +21,9 @@ export function NewsDetail() {
   const fetchNewsDetail = (url) => {
     console.log('Fetching detailed news:', url);
 
+     // Use CORS Anywhere to fetch the news without CORS issues
+  const corsAnywhereUrl = `http://localhost:3000/${url}`;
+
     // Perform the necessary API call or logic to fetch detailed news information
     // Replace this with your actual API call or logic
     fetch(url)
