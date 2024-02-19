@@ -80,12 +80,12 @@ export function NewsBoard() {
   }, [country, category]);
 
   const handleClick = (url) => {
-    if(oncliclk){
-      // onClick(url);
+    // if(oncliclk){
+    //   // onClick(url);
+    
+    // }
        //  navigate to the detailed news page
-    navigate(`/news/detail?url=${encodeURIComponent(url)}`);
-    }
-   
+       navigate(`/news/detail?url=${encodeURIComponent(url)}`);
   };
 
   // const loadNextPage = () => {
