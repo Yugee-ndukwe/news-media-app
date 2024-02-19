@@ -81,21 +81,13 @@ export function NewsBoard() {
 
   const handleClick = (url) => {
     if(oncliclk){
-      onClick(url);
+      // onClick(url);
        //  navigate to the detailed news page
     navigate(`/news/detail?url=${encodeURIComponent(url)}`);
     }
    
   };
 
-  // const handleCountryClick = (countryCode) => {
-  //   setSelectedCountry(countryCode);
-  // };
-
-  // const handleCategoryChange = (countryCode,category)=>{
-  //   setSelectedCountry(countryCode)
-  //   setSelectedCategory(category)
-  // }
   // const loadNextPage = () => {
   //   setCurrentPage((prevPage) => prevPage + 1);
   // };

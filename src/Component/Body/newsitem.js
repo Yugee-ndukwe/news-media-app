@@ -8,10 +8,10 @@ import { FaShare} from "react-icons/fa";
 import { AiTwotoneLike } from "react-icons/ai";
 import { FaFacebook,  FaInstagram} from "react-icons/fa";
 import { FaWhatsapp, FaComment  } from 'react-icons/fa';
-
 import { FaXTwitter } from "react-icons/fa6";
 import News from '../../assests/realistic-news-studio-background_23-2149985612.avif'
 import IMG from '../../assests/fa-brands_facebook-square.svg'
+import { useNavigate } from 'react-router-dom';
 import './newsitem.css'
 
 export function NewsItem({ title, description, src, url, onClick }) {
@@ -24,6 +24,7 @@ export function NewsItem({ title, description, src, url, onClick }) {
   const [commentContent, setCommentContent] = useState('');
   const [commentSectionVisible, setCommentSectionVisible] = useState(false);
   const [comments, setComments] = useState([]);
+  const navigate = useNavigate
 
   const shareUrl = () => {
     setShowModal(true);
@@ -73,6 +74,7 @@ export function NewsItem({ title, description, src, url, onClick }) {
 
   const handleCommentSubmit = (event) => {
     event.preventDefault();
+    navigate('/pages')
 
     if (commentContent.trim() !== '') {
       const newComment = {
@@ -132,10 +134,15 @@ const formatTime = (timestamp) => {
               <FaShare className='btnShare'/>
               {/* <FaWhatsapp/> */}
             </button>
-            {/* <button onClick={toggleCommentSection} className="btn1">
+            <Link to={'/pages'}>
+            <button onClick={toggleCommentSection} className="btn1">
+              {/* <FaComment className='btnComment'/> */}
+             
               <FaComment className='btnComment'/>
-              <span>{comments.length}</span>
-            </button> */}
+            </button>
+
+              </Link>
+              {/* <span>{comments.length}</span> */}
             <button onClick={increaseCount} className="btn1">
               <AiTwotoneLike className='btnLike'/>
               <span>{count}</span>
