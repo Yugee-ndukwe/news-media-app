@@ -219,9 +219,9 @@ import { Thread } from './thread';
 import { IoMdArrowBack } from "react-icons/io";
 import { Link } from 'react-router-dom';
 import { collection, addDoc, onSnapshot,query, where, runTransaction, doc, getDoc, getDocs } from 'firebase/firestore';
-import { firestore } from './firebase';
+import { firestore } from '../Component/firebase/firebase';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { fetchUserData } from './firebase';
+import { fetchUserData } from '../Component/firebase/firebase';
 
 export function Forum() {
   const [posts, setPosts] = useState([]);
