@@ -36,7 +36,7 @@ export function BasicExample({setCategory}) {
           <Navbar expand="lg" bg="dark" variant="dark" sticky= 'top'className="categoryNav"collapseOnSelect>
               <div className="container-fluid ">
                 <Navbar.Brand as={Link} to="/">
-                  <span className="logo1">N&M</span>
+                  <span className="logo1 badge bg-danger">N&M</span>
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                 <Navbar.Collapse id="basic-navbar-nav">

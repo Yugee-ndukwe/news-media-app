@@ -1,0 +1,60 @@
+.profile-edit-form{
+    align-items: center;
+    /* margin: auto; */
+}
+
+.profile-form{
+    text-align: left;
+    width: 100%;
+    align-items: center;
+    background: #fcfc;
+}
+
+.profile-form label{
+    text-align: center;
+    align-items: center;
+    display: block;
+    line-height: 2; 
+    border-radius: 2px;
+}
+.profile-form input{
+    width: 100%;
+}
+.profile-picture{
+    display: flex; 
+    flex-wrap: wrap;
+    justify-content: center; 
+    text-align: left;
+    /* align-items: center; */
+    width: 100%;
+
+}
+/* .profile-edit-form label input{
+    text-align: left;
+    margin-bottom: 15px;
+} */
+
+.profile-btn{
+    display: flex;
+    justify-content: space-around;
+}
+
+.save-btn{
+    border: 0;
+    outline: 0;
+    border-radius: 50%;
+    height: 70px;
+    background-color: #555cde;
+    padding: 10px;
+    color: #fff;
+}
+
+.cancel-btn{
+    border: 0;
+    outline: 0;
+    border-radius: 50%;
+    height: 70px;
+    background-color: #555cde;
+    padding: 10px;
+    color: #fff;
+}

@@ -1,51 +1,16 @@
-
-
-/* .main-nav{
-    background: #000;
-    height: 100px;
-    border: 10px solid green;
-   
-} */
-/* .firstNav{
-    color: #fff;
-}
-.navbar{
-    position: fixed;
-    top: 0;
-    width: 100%;
-    /* background-color: #333; Replace with your desired background color */
-    /* padding: 10px;
-    z-index: 1  ;
-} */ 
-.logo1{
+ .logo1{
     font-weight: 400;
     font-size: 30px;
-    background-color: crimson;
-    width: 100px;
     -webkit-text-stroke: 2px white;
     color: transparent;
     transition: 0.5px;
-    font-style: italic;
     border: 0;
     border-radius: 5px;
-    /* margin: 5px 10px ; */
-    align-items: flex-start;
-    
-    
+    align-items: flex-start; 
 }
 
 
 .logo1 span{
     align-items: center;
-    padding-left: 23px;
 }
 
-/* .list:hover{
-    /* text-decoration: underline; */
-    /* border-bottom: 2px solid #daa520; */
-    /* text-decoration-color: #daa520; */
-    /* line-height: 7px; */
-/* } */
-/* .active-link{
-    color: #daa520;
-} */ 

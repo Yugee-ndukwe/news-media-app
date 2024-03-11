@@ -1,58 +1,56 @@
-body{
-    /* background-image: url(https://img.freepik.com/free-photo/white-cloud-blue-sky_74190-7709.jpg); */
-    /* background: #453; */
-}
-.signUp{
-    /* border: 1px solid #555; */
-    margin: auto;
-    /* justify-content: center; */
-    align-items: center;
-    /* width: 50px; */
+.signUp{ 
     height: 500px;
-    background-color:#fcfcfc;
+    margin: 0 20px;
+    border-radius: 2px;
+    /* position: relative; */
+    /* z-index: 1; */
+
 }
 
 .signup-form{
-    align-items: center;
-    text-align: center;
-    /* padding: 10px; */
+    width: 100%;
 }
 
 .signUp h2{
     text-align: center;
     font-weight: 100;
-    /* font-style: oblique; */
+    background-color: #fff;
+    margin: 2px 5px;
+
+   
 }
 
 .signUp label{
+    align-items: flex-start;
+    /* gap: 10px; */
+    text-align: left;
+    display: block;
+    line-height: 2; 
+    border-radius: 2px;
+    background: #e2e2e6;
+    /* box-shadow:2px solid #fff; */
+}
+
+.form-field{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.signUp input{
     align-items: center;
-    gap: 10px;
-    /* margin-left: 20px; */
+    width: 100%;
+    text-align: left;
+    border-left: 0;
+    border-right: none;
+    border-top: none;
+    outline: none;
 }
-
-.signUp label input{
-    margin-bottom: 15px;
-    /* width: 300px; */
-}
-/* .signUp form{
-    gap: 10px;
-    background-color: rgb( #fcfc47, #555cde, #d45e83);
-} */
-
-/* .signUp select{
-    width: 300px;
-    margin-bottom: 15px;
-} */
 .form-butn{
-    /* align-items: center; */
     width: 100px;
     border-radius: 10px;
     outline: 0;
     border: 0;
     height: 50px;
-    /* display: flex; */
-    /* justify-content: center; */
-    /* align-self: center; */
     background-color: #555cde;
 
     color: #fcfcfc;
@@ -65,7 +63,6 @@ body{
 }
 .form-btn{
     align-items: center;
-    /* margin-top: 20px;s */
     text-align: center;
 }
 .profile-pix{
