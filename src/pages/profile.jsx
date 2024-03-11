@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getAuth, updateProfile } from 'firebase/auth';
-import { doc, updateDoc, getFirestore, collection } from 'firebase/firestore';
+import { doc, updateDoc, getFirestore } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 import './profile.css';
