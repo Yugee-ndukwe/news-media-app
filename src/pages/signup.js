@@ -244,12 +244,9 @@ import { BasicExample } from '../Component/Navbar/navbar';
 import { HeaderNav } from '../header/headernav';
 import { Link, useNavigate } from 'react-router-dom';
 import Spinner from 'react-bootstrap/Spinner';
-// import { useAuth } from './auth';
-// import { firestore } from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
 import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword } from 'firebase/auth';
 import { getFirestore, doc, setDoc,getDoc, collection } from 'firebase/firestore';
-
 import './signup.css';
 
 

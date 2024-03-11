@@ -218,11 +218,7 @@ import { useNavigate } from 'react-router-dom';
 import { Thread } from './thread';
 import { IoMdArrowBack } from "react-icons/io";
 import { Link } from 'react-router-dom';
-// import { useAuth } from './auth';
-// import { collection, addDoc, onSnapshot } from 'firebase/firestore';
-import {useDocument} from 'react-firebase-hooks/firestore'
 import { collection, addDoc, onSnapshot,query, where, runTransaction, doc, getDoc, getDocs } from 'firebase/firestore';
-// import firebaseConfig from './firebase';
 import { firestore } from './firebase';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { fetchUserData } from './firebase';

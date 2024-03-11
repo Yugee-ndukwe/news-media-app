@@ -32,14 +32,6 @@ export const Thread = ({
 
   console.log(count);
   const navigate = useNavigate();
-
-  // const handleProfileEditClick = () => {
-  //   if (authenticatedUser && authenticatedUser.username) {
-  //     onProfileUpdate(authenticatedUser);
-  //   } else {
-  //     console.log('User not authenticated.');
-  //   }
-  // };
     return (
       <div key={index}>
       <div className="post-wrapper">
