@@ -218,10 +218,11 @@ import { useNavigate } from 'react-router-dom';
 import { Thread } from './thread';
 import { IoMdArrowBack } from "react-icons/io";
 import { Link } from 'react-router-dom';
-import { collection, addDoc, onSnapshot,query, where, runTransaction, doc, getDoc, getDocs } from 'firebase/firestore';
+import { collection, addDoc, onSnapshot,query, where, runTransaction, doc, getDoc, getDocs,updateDoc } from 'firebase/firestore';
 import { firestore } from '../Component/firebase/firebase';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { fetchUserData } from '../Component/firebase/firebase';
+import { ProfileEdit } from './profile';
 
 export function Forum() {
   const [posts, setPosts] = useState([]);
@@ -477,7 +478,7 @@ export function Forum() {
       // Add other properties as needed
     }}
    
-    onCancel={onCancel}
+  
   />
 )}
             </div>
