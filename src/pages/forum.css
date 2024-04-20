@@ -12,9 +12,10 @@
 .logout-btn{
     border: 0;
     outline: 0;
-    width: 50px;
+    width: 100px;
     height: 50px;
     background-color: azure;
+    margin: 5px;
 }
 .forum-page{
     background: #d8c3f4;
