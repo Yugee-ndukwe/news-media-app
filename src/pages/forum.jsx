@@ -218,10 +218,10 @@ import { useNavigate } from 'react-router-dom';
 import { Thread } from './thread';
 import { IoMdArrowBack } from "react-icons/io";
 import { Link } from 'react-router-dom';
-import { collection, addDoc, onSnapshot,query, where, runTransaction, doc, getDoc, getDocs,updateDoc } from 'firebase/firestore';
+import { collection, addDoc, onSnapshot,query, where, runTransaction, doc, getDoc, getDocs,updateDoc, deleteDoc} from 'firebase/firestore';
 import { firestore } from '../Component/firebase/firebase';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { fetchUserData } from '../Component/firebase/firebase';
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+import { fetchUserData, fetchUserDataById } from '../Component/firebase/firebase';
 import { ProfileEdit } from './profile';
 
 export function Forum() {
@@ -233,102 +233,251 @@ export function Forum() {
   const [count, setCount] = useState(0);
   const [comment, setComment] = useState(0);
   const [isLike, setIsLike] = useState(false);
+  const [likeCounts, setLikeCounts] = useState({});
   const [authenticatedUser, setAuthenticatedUser] = useState(null);
   const navigate = useNavigate();
   const [userData, setUserData] = useState(null)
+  const [showDeleteIcon, setShowDeleteIcon] = useState(false)
+  const [color, setColor] =useState('black')
+  const [commentLikes, setCommentLikes] = useState({});
+
+  
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const usersData = await fetchUserData();
-        const firstUser = usersData[0];
-        console.log('Fetched user data:', firstUser);
-        setAuthenticatedUser(firstUser);
+        const userData = await fetchUserData(); // Assuming this function returns the user object for the currently authenticated user
+        setAuthenticatedUser(userData); // Set authenticatedUser to the user object
       } catch (error) {
         console.error('Error fetching user data', error);
       }
     };
   
-    const unsubscribe = onSnapshot(collection(firestore, 'posts'), async (snapshot) => {
-      const postsData = await Promise.all(snapshot.docs.map(async (doc) => {
-        const postData = { id: doc.id, ...doc.data() };
-        // Ensure comments is initialized as an array
-        postData.comments = postData.comments || [];
-        return postData;
-      }));
+       
+
+   // Fetch posts and associated user information
+// Fetch posts and associated user information
+// const fetchPosts = async () => {
+//   try {
+//     const snapshot = await getDocs(collection(firestore, 'posts'));
+//     const postsData = await Promise.all(snapshot.docs.map(async (doc) => {
+//       const postData = { id: doc.id, ...doc.data() };
+//       if (postData.userId) {
+//         const userData = await fetchUserDataById(postData.userId);
+//         if (userData) {
+//           // Ensure userData is not null and contains the username field
+//           if (userData.username) {
+//             postData.username = userData.username; // Assign the username from userData to postData
+//           } else {
+//             console.error('Username not found for user:', postData.userId);
+//           }
+//           // Include other user data fields if needed
+//           return { ...postData, user: userData };
+//         } else {
+//           console.error('User data not found for user:', postData.userId);
+//           // You can handle this case differently based on your application's logic
+//           return postData;
+//         }
+//       } else {
+//         console.error('User ID not found for post:', postData.id);
+//         return postData;
+//       }
+//     }));
+//     setPosts(postsData);
+//   } catch (error) {
+//     console.error('Error fetching posts:', error);
+//   }
+// };
+
+
+    
+//   const fetchPosts = async () => {
+//   try {
+//     const snapshot = await getDocs(collection(firestore, 'posts'));
+//     const postsData = await Promise.all(snapshot.docs.map(async (doc) => {
+//       const postData = { id: doc.id, ...doc.data() };
+//       // Fetch user information for the user who made the post
+//       const userData = await fetchUserDataById(postData.userId); // Replace with the appropriate function to fetch user data by ID
+//       return { ...postData, user: userData }; // Add user information to the post data
+//     }));
+//     setPosts(postsData);
+//     console.log(fetchPosts)
+//     console.log(fetchUserDataById)
+//   } catch (error) {
+//     console.error('Error fetching posts:', error);
+//   }
+// };
+
+  
+ const unsubscribe = onSnapshot(collection(firestore, 'posts'), async (snapshot) => {
+      const postsData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       setPosts(postsData);
-    }, (error) => {
-      console.error('Error fetching posts:', error);
+      // Initialize comment counts for each post to 0
+      const initialCommentCounts = postsData.reduce((acc, post) => {
+        acc[post.id] = post.comments.length;
+        return acc;
+      }, {});
+      setComment(initialCommentCounts);
     });
+
   
     fetchData();
+    // fetchPosts()
+
+    
+  
+    // Subscribe to authentication state changes
+    const authUnsubscribe = onAuthStateChanged(getAuth(), (user) => {
+      if (user) {
+        // User is signed in
+        const { displayName, photoURL } = user;
+        setAuthenticatedUser({ username: displayName, avatar: photoURL });
+        setUserAvatar(photoURL);
+      } else {
+        // User has signed out
+        setAuthenticatedUser(null);
+        setUserAvatar('');
+        console.log('User signed out');
+      }
+    });
+    authUnsubscribe()
   
     return () => {
       console.log('Unsubscribing from posts');
       unsubscribe();
     };
   }, []);
+  
+
+   // Handler to handle logout
+   const handleLogout = async () => {
+    try {
+      await signOut(getAuth()); // Call signOut method from Firebase Authentication
+      alert('Sign-out Successful')
+      navigate('/pages'); // Redirect to login page after logout
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
+  };
    
 
-  // Handler to submit a new post
   const handlePostSubmit = async (event) => {
     event.preventDefault();
-
+  
     if (postContent.trim() !== '') {
       try {
-        const newPostRef = await addDoc(collection(firestore, 'posts'), {
-          content: postContent,
-          timestamp: new Date().toLocaleString(),
-          avatar: userAvatar,
-          comments: [],
-        });
+        // Get the current authenticated user
+        const user = getAuth().currentUser;
+        if (user) {
+          // Fetch the user data to get the correct username
+          const userData = await fetchUserDataById(user.uid);
+          if (userData) {
+            // Ensure that the avatar field is not undefined
+            const avatar = authenticatedUser && authenticatedUser.avatar ? authenticatedUser.avatar : userData.avatar;
+            const username = authenticatedUser && authenticatedUser.username ? authenticatedUser.username : userData.username;
 
-        const newPost = { id: newPostRef.id, content: postContent, timestamp: new Date().toLocaleString(), avatar: userAvatar, comments: [] };
-
-        setPosts((prevPosts) => [...prevPosts, newPost]);
-        setPostContent('');
-        setCommentSectionVisible(false);
+            // Include the username and avatar of the currently authenticated user when submitting a new post
+            const newPostRef = await addDoc(collection(firestore, 'posts'), {
+              content: postContent,
+              timestamp: new Date().toLocaleString(),
+              avatar: avatar,
+              username: username, // Use the username fetched from the user's collection
+              userId: user.uid, // Include the user ID
+              comments: [],
+            });
+  
+            const newPost = {
+              id: newPostRef.id,
+              content: postContent,
+              timestamp: new Date().toLocaleString(),
+              avatar: avatar,
+              username: username, // Use the username fetched from the user's collection
+              userId: user.uid, // Include the user ID
+              comments: []
+            };
+  
+            setPosts((prevPosts) => [...prevPosts, newPost]);
+            setPostContent('');
+            setCommentSectionVisible(false);
+          } else {
+            console.error('User data not found for authenticated user:', user.uid);
+          }
+        } else {
+          console.log('User not signed in');
+        }
       } catch (error) {
         console.error('Error adding post:', error);
       }
     }
   };
+  
 
   // Handler to submit a new comment
   const handleCommentSubmit = async (postId, commentContent, setCommentContent, handleIncreasecount) => {
     if (commentContent.trim() !== '') {
       try {
-        const commentsRef = doc(firestore, 'posts', postId);
-        await runTransaction(firestore, async (transaction) => {
-          const postDoc = await transaction.get(commentsRef);
-          if (!postDoc.exists()) {
-            console.error('Post does not exist:', postId);
-            return;
+        
+        const user = getAuth().currentUser;
+        if (user) {
+          // Fetch the user data to get the correct username
+          const userData = await fetchUserDataById(user.uid);
+          if (userData) {
+            const newComment = {
+              content: commentContent,
+              user: {
+                userId: user.uid,
+                username: userData.username,
+                avatar: userData.avatar,
+              },
+              timestamp: new Date().toLocaleString(),
+              replies: [], // Initialize replies array if needed
+            };
+  
+            const commentsRef = doc(firestore, 'posts', postId);
+            await runTransaction(firestore, async (transaction) => {
+              const postDoc = await transaction.get(commentsRef);
+              if (!postDoc.exists()) {
+                console.error('Post does not exist:', postId);
+                return;
+              }
+  
+              const postComments = postDoc.data().comments || [];
+              postComments.push(newComment);
+  
+              transaction.update(commentsRef, { comments: postComments });
+            });
+  
+            setCommentContent('');
+            handleIncreasecount(postId);
+          } else {
+            console.error('User data not found for authenticated user:', user.uid);
           }
-  
-          const postComments = postDoc.data().comments || [];
-          const newComment = {
-            content: commentContent,
-            user: authenticatedUser.username,
-            timestamp: new Date().toLocaleString(),
-            avatar: userAvatar,
-            replies: [],
-          };
-          postComments.push(newComment);
-  
-          transaction.update(commentsRef, { comments: postComments });
-        });
-  
-        setCommentContent('');
-        handleIncreasecount(postId); // Pass the postId to the handleIncreasecount function
+        } else {
+          console.log('User not signed in');
+        }
       } catch (error) {
         console.error('Error adding comment:', error);
       }
     }
   };
   
-  
 
+//  handler for deleting post
+const handleDeletePost = async (postId) => {
+  console.log('Deleting post with id:', postId);
+  try {
+    setShowDeleteIcon(!showDeleteIcon)
+    await deleteDoc(doc(firestore, 'posts', postId)); // Delete the post document from Firestore
+    onDeletePost(postId); // Call the onDeletePost function passed from the Forum component
+  } catch (error) {
+    console.error('Error deleting post:', error);
+  }
+};
+const onDeletePost = (postId) => {
+  // Implement the logic to handle post deletion here
+  // For example, update the state to remove the deleted post from the posts array
+  setPosts((prevPosts) => prevPosts.filter((post) => post.id !== postId));
+};
   // Handler to toggle comment section visibility
   const toggleCommentSection = (index) => {
     setCommentSectionVisible(!commentSectionVisible);
@@ -342,18 +491,55 @@ export function Forum() {
   
 
   // Handler to increase the comment count
-  const handleIncreasecount = () => {
-    setComment(comment + 1);
+  const handleIncreasecount = (postId) => {
+    setComment((prevCounts) => ({
+      ...prevCounts,
+      [postId]: (prevCounts[postId] || 0) + 1, // Increment the count for the specific post ID
+    }));
   };
-  
 
   // Handler to change color (example)
-  const handleChangeColor = () => {
+  const handlePostLike = (postId) => {
     if (!isLike) {
-      setCount(count + 1);
-      setIsLike(true);
+      // Increment the like count for the specific post
+      setLikeCounts(prevCounts => ({
+        ...prevCounts,
+        [postId]: (prevCounts[postId] || 0) + 1
+      }));
+      setIsLike(true); // Set isLike to true when the like button is clicked
+      console.log('Liked post with id:', postId);
+    } else {
+      console.log('You have already liked this post');
     }
   };
+
+  const handleCommentLike = (postId, commentIndex) => {
+    const commentId = `${postId}_${commentIndex}`; // Generate a unique identifier for each comment
+    if (commentLikes[commentId]) {
+      // If the comment is already liked, unlike it
+      setCommentLikes(prevLikes => ({ ...prevLikes, [commentId]: false }));
+    } else {
+      // If the comment is not liked, like it
+      setCommentLikes(prevLikes => ({ ...prevLikes, [commentId]: true }));
+    }
+  };
+  
+  
+  
+  
+
+  // const handleChangeColor = (postId, currentCount, posts, setPosts) => {
+  //   // Find the index of the post in the posts array
+  //   const postIndex = posts.findIndex(post => post.id === postId);
+  //   if (postIndex !== -1 && !posts[postIndex].isLike) {
+  //     // Update the like count for the specific post
+  //     const updatedPosts = [...posts];
+  //     updatedPosts[postIndex].count = currentCount + 1; // Increment the current count
+  //     updatedPosts[postIndex].isLike = true;
+  //     setPosts(updatedPosts); // Update the state with the new count
+  //   }
+  // };
+  
 
   // Handler for profile edit click
   const handleProfileEditClick = () => {
@@ -427,9 +613,12 @@ export function Forum() {
   return (
     <>
       <div className="container-fluid forum-page">
+        <div className='double-btn'>
         <Link to='/'>
           <button className='btn-back my-2'><IoMdArrowBack style={{ fontSize: '30px' }} /></button>
         </Link>
+        <button className='logout-btn'onClick={handleLogout}>log out</button>
+        </div>
         <div className="row justify-content-center">
           <h1>Discussion Page</h1>
           <h6>N&M CHANNEL</h6>
@@ -452,20 +641,29 @@ export function Forum() {
             <div id="posts">
             {/* {authenticatedUser && console.log('Authenticated User Data:', authenticatedUser)} */}
 
-              {posts.map((post, index) => (
+            {posts.slice().sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)).map((post, index) => (
                   <Thread
                   key={index}
                   post={post}
                   index={index}
+                  setPosts={setPosts}
                   commentSectionVisible={commentSectionVisible}
                   selectedPostIndex={selectedPostIndex}
                   toggleCommentSection={toggleCommentSection}
                   handleCommentSubmit={handleCommentSubmit}
                   handleIncreasecount={handleIncreasecount}
-                  count={count}
+                  count={likeCounts[post.id] || 0}
                   comment={comment}
-                  handleChangeColor={handleChangeColor}
+                  handlePostLike={handlePostLike}
                   authenticatedUser={authenticatedUser} // Pass the authenticated user data as a prop
+                  // user={post.user} // Pass the user information associated with the post
+                  handleDeletePost={() => handleDeletePost(post.id)} 
+                  showDeleteIcon={showDeleteIcon}
+                  onDeletePost={onDeletePost}
+                  setShowDeleteIcon={setShowDeleteIcon}
+                  color= {color}
+                  handleCommentLike={handleCommentLike}
+                  commentLikes={commentLikes}
                 />
               ))}
              {userData && (

@@ -19,7 +19,7 @@ function App() {
         <Routes>
           {/* <Route path='/' element={<News/>}></Route> */}
           <Route path="/" element={<NewsBoard />} />
-          {/* <Route path="/news/detail" element={<NewsDetail />} /> */}
+          <Route path="/news/detail" element={<NewsDetail />} />
           {/* <Route path="/category/general" element={<NewsBoard />}>General</Route> */}
           <Route path="/pages" element={<SignUp />}></Route>
           <Route path='/pages/forum' element={<Forum/>}></Route>

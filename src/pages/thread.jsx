@@ -2,16 +2,19 @@
 
 import React, { useState } from "react";
 import './forum.css'
-import { MdChat } from "react-icons/md";
+import { MdChat,MdDelete } from "react-icons/md";
 import { AiOutlineLike } from "react-icons/ai";
 import { LuSendHorizonal } from "react-icons/lu";
+import { BsThreeDotsVertical } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+
 
 
 export const Thread = ({
   post,
   index,
+  setPosts={setPosts},
   commentSectionVisible,
   selectedPostIndex,
   toggleCommentSection,
@@ -19,16 +22,26 @@ export const Thread = ({
   handleIncreasecount,
   count,
   comment,
-  handleChangeColor,
+  handlePostLike,
   authenticatedUser,
-  onProfileEditClick
+  user,
+  handleDeletePost,
+  onProfileEditClick,
+  showDeleteIcon,
+  onDeletePost,
+  setShowDeleteIcon,
+  color,
+  handleCommentLike,
+  commentLikes
 }) => {
-  const { content, timestamp, avatar, comments } = post;
-  const { username, profilePicture } = authenticatedUser || {};
+  const { content, timestamp, username,avatar, comments } = post
+  // const userAvatar = user ? user.avatar : '';
+  // const username = user ? displayName : '';
+  // const {username, profilePicture } = authenticatedUser || {};
   const [commentContent, setCommentContent] = useState('');
   console.log('Thread component received post:', post);
-  console.log('Thread component received authenticatedUser:', authenticatedUser);
-  console.log('Comment content:', commentContent);
+  // console.log('Thread component received authenticatedUser:', authenticatedUser);
+  // console.log('Comment content:', commentContent);
 
   console.log(count);
   const navigate = useNavigate();
@@ -38,15 +51,21 @@ export const Thread = ({
       <div className="post-header"  onClick={onProfileEditClick} >
       {authenticatedUser && (
               <>
-             <Link to={'/pages/profile'}>
-               <img src={profilePicture || 'default_profile_picture.jpg'} alt="." className="avatar" />
+              <div className="user-info">
+              <Link to={'/pages/profile'}>
+               <img src={avatar || 'default_profile_picture.jpg'} alt="." className="avatar" />
                </Link>
                 <div>
                 <p  className="user-name">{username}</p>
                   {/* <p className="user-name">{authenticatedUser.username}</p> */}
                 </div>
+              </div>
+             
               </>
             )}
+           <div>
+           <BsThreeDotsVertical onClick={()=>setShowDeleteIcon(!showDeleteIcon)}/>
+           </div>
       </div>
       <div className=" post-container">
       <p>{post.content}</p>
@@ -62,14 +81,26 @@ export const Thread = ({
       }}
       className="chat-icon"
     />
-    <span>{comment}</span>
+    <span>{comment[post.id]}</span>
     <AiOutlineLike
-    onClick={() => handleChangeColor()}
+    onClick={() => handlePostLike(post.id)}
       style={{fontSize: '22px'}}
       className="like-icon"
     />
     <span>{count}</span>
+
+   
+     
+
      </div>
+      <div className="delete-icon">
+      {authenticatedUser && username === username && showDeleteIcon && (
+          <div className="delete-btn-container">
+            <MdDelete onClick={() =>handleDeletePost(post.id)}  style={{fontSize: '22px'}} className="delete-btn" post={post} />
+              <span className="toolbin">Delete</span>
+          </div>
+          )}
+      </div>
       </div>
       
      
@@ -80,19 +111,27 @@ export const Thread = ({
       <div key={commentIndex} className="comment">
         {/* Render each comment */}
         <div className="user-comment">
-          <img src={comment.avatar || 'placeholder-avatar.png'} alt="." className="avatar" />
-          <p className="user-name">{comment.user}</p>
+          <img src={comment.user.avatar || 'placeholder-avatar.png'} alt="." className="avatar" />
+          <p className="user-name">{comment.user.username}</p>
         </div>
         <div className="comment-post">
           <p>{comment.content}</p>
           <small>{comment.timestamp}</small>
         </div>
         <div className="like-reply">
-          <button className="like">Like</button>
+        <button
+  onClick={() => handleCommentLike(post.id, commentIndex)}
+  className="like"
+  style={{ color: commentLikes[`${post.id}_${commentIndex}`] ? 'blue' : 'black' }}
+>
+  <AiOutlineLike style={{ gap: '7px' }} />
+  Like
+</button>
+
           <button
             onClick={() => {
               // Add an authenticated username to the textarea when replying to a comment
-              const replyUsername = comment.user || authenticatedUser.username;
+              const replyUsername = comment.user ? comment.user.username : '';
               setCommentContent(`@${replyUsername} `);
             }}
             className="reply"
@@ -105,7 +144,7 @@ export const Thread = ({
     <form
   onSubmit={(e) => {
     e.preventDefault(); // Prevent the default form submission behavior
-    handleCommentSubmit(post.id, commentContent, setCommentContent, handleIncreasecount);
+    handleCommentSubmit(post.id, commentContent, setCommentContent, handleIncreasecount(post.id),username);
   }}
   className="comment-form"
 >

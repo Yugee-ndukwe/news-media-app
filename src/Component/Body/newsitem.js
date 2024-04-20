@@ -12,9 +12,10 @@ import { FaXTwitter } from "react-icons/fa6";
 import News from '../../assests/realistic-news-studio-background_23-2149985612.avif'
 import IMG from '../../assests/fa-brands_facebook-square.svg'
 import { useNavigate } from 'react-router-dom';
+import { MdSmartDisplay } from "react-icons/md";
 import './newsitem.css'
 
-export function NewsItem({ title, description, src, url, onClick }) {
+export function NewsItem({ title, description, src, url,videoUrl, onClick }) {
   // console.log(description)
   // console.log("News Object:", { title, description, src, url, onClick })
   const [count, setCount] = useState(0);
@@ -129,7 +130,11 @@ const formatTime = (timestamp) => {
             {/* <button>
             <Link to={`/news/detail?url=${encodeURIComponent(url)}`}>Read More</Link>
             </button> */}
-           
+             <button className='btn-play'>
+             <Link to={`/news/detail`}>
+                <MdSmartDisplay className='play-icon'/>
+              </Link>
+            </button> 
             <button onClick={shareUrl} className="btn1 btn-light">
               <FaShare className='btnShare'/>
               {/* <FaWhatsapp/> */}

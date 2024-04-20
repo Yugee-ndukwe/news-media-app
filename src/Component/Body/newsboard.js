@@ -110,10 +110,7 @@ export function NewsBoard() {
        <BasicExample setCategory={setCategory}/>
       <HeaderNav setCountry={setCountry}/>
      {/* <WorldNews/> */}
-     <NewsSource/>
-
-
-      <div>
+     <div>
       <h5 style={{ textAlign: 'center', marginTop:'20px' }}>
       <span className="badge bg-danger fs-4">Latest</span>
       News  {countryNames[country]} - {category} 
@@ -122,11 +119,17 @@ export function NewsBoard() {
 
         </h5>
       </div>
+
+     
+   
+    
+
+     
       <div className="container-fluid my-3">
         <div className="row">
           <div className="d-flex flex-wrap justify-content-around">
           {loading ? (
-              <Spinner animation="border" />
+              <Spinner animation="border" variant="info"/>
             ) : (
               articles.map((news, index) => (
                 <NewsItem
@@ -136,7 +139,7 @@ export function NewsBoard() {
                 content={news.content}
                 src={news.image_url}
                 url={news.link}
-                // videoUrl={news.video_url} 
+                videoUrl={news.video_url}
                 onClick={() => handleClick(news.url)}
               />
               ))
@@ -149,6 +152,7 @@ export function NewsBoard() {
           </div>
         </div>
       </div>
+      <NewsSource/>
       <Savednews/>
       <Footer  setCountry={setCountry}  setCategory={setCategory}/>
     </>

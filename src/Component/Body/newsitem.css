@@ -4,6 +4,17 @@ body{
     /* font-family: 'Poppins', sans-serif; */
     /* font-family: 'Roboto', sans-serif; */
 }
+.btn-play{
+    background: none;
+    border: 0;
+    outline: 0;
+
+}
+.play-icon{
+    background: none;
+    color: #fff;
+    font-size: 35px;
+}
 .btn1{
     border-radius: 50%;
     align-items: center;
@@ -138,6 +149,10 @@ body{
      border: 0;
      outline: 0;
      border-radius: 10px;
+}
+
+.news-detail-container{
+    text-align: center;
 }
 
 

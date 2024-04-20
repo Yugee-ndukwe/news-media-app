@@ -45,6 +45,16 @@
     border-top: none;
     outline: none;
 }
+.password-container{
+    position: relative;
+}
+.password-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px; /* Adjust this value based on your preference */
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
 .form-butn{
     width: 100px;
     border-radius: 10px;

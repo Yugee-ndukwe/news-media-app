@@ -244,6 +244,7 @@ import { BasicExample } from '../Component/Navbar/navbar';
 import { HeaderNav } from '../header/headernav';
 import { Link, useNavigate } from 'react-router-dom';
 import Spinner from 'react-bootstrap/Spinner';
+import { BiShow,BiHide } from "react-icons/bi";
 import { initializeApp } from 'firebase/app';
 import { getAuth, createUserWithEmailAndPassword,signInWithEmailAndPassword } from 'firebase/auth';
 import { getFirestore, doc, setDoc,getDoc, collection } from 'firebase/firestore';
@@ -273,7 +274,7 @@ export function SignUp() {
     password: '',
   });
 
-
+  const [showPassword, setShowPassword] = useState(false); 
   const [showWelcomeMessage, setShowWelcomeMessage] = useState(false);
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [networkError, setNetworkError] = useState(false);
@@ -285,6 +286,11 @@ export function SignUp() {
       ...formData,
       [name]: value,
     });
+  };
+
+  // handler to show or hide password
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword); // Toggle show password state
   };
 
   // const { signIn } = useAuth();
@@ -410,7 +416,12 @@ export function SignUp() {
                     <br />
                     <label>
                       Password:
-                      <input type="password" name="password" placeholder='Please Enter Your Password' value={formData.password} onChange={handleChange} required />
+                      <div className="password-container">
+                         <input type={showPassword ? "text" : "password"} name="password" placeholder='Please Enter Your Password' value={formData.password} onChange={handleChange} required />
+                        <div className="password-icon" onClick={toggleShowPassword}>
+                          {showPassword ? <BiHide /> : <BiShow />}
+                          </div>
+                      </div>
                     </label>
                     <br />
                     <div className="form-btn">
