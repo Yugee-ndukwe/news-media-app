@@ -130,11 +130,11 @@ const formatTime = (timestamp) => {
             {/* <button>
             <Link to={`/news/detail?url=${encodeURIComponent(url)}`}>Read More</Link>
             </button> */}
-             <button className='btn-play'>
+             {/* <button className='btn-play'>
              <Link to={`/news/detail`}>
                 <MdSmartDisplay className='play-icon'/>
               </Link>
-            </button> 
+            </button>  */}
             <button onClick={shareUrl} className="btn1 btn-light">
               <FaShare className='btnShare'/>
               {/* <FaWhatsapp/> */}

@@ -253,61 +253,6 @@ export function Forum() {
       }
     };
   
-       
-
-   // Fetch posts and associated user information
-// Fetch posts and associated user information
-// const fetchPosts = async () => {
-//   try {
-//     const snapshot = await getDocs(collection(firestore, 'posts'));
-//     const postsData = await Promise.all(snapshot.docs.map(async (doc) => {
-//       const postData = { id: doc.id, ...doc.data() };
-//       if (postData.userId) {
-//         const userData = await fetchUserDataById(postData.userId);
-//         if (userData) {
-//           // Ensure userData is not null and contains the username field
-//           if (userData.username) {
-//             postData.username = userData.username; // Assign the username from userData to postData
-//           } else {
-//             console.error('Username not found for user:', postData.userId);
-//           }
-//           // Include other user data fields if needed
-//           return { ...postData, user: userData };
-//         } else {
-//           console.error('User data not found for user:', postData.userId);
-//           // You can handle this case differently based on your application's logic
-//           return postData;
-//         }
-//       } else {
-//         console.error('User ID not found for post:', postData.id);
-//         return postData;
-//       }
-//     }));
-//     setPosts(postsData);
-//   } catch (error) {
-//     console.error('Error fetching posts:', error);
-//   }
-// };
-
-
-    
-//   const fetchPosts = async () => {
-//   try {
-//     const snapshot = await getDocs(collection(firestore, 'posts'));
-//     const postsData = await Promise.all(snapshot.docs.map(async (doc) => {
-//       const postData = { id: doc.id, ...doc.data() };
-//       // Fetch user information for the user who made the post
-//       const userData = await fetchUserDataById(postData.userId); // Replace with the appropriate function to fetch user data by ID
-//       return { ...postData, user: userData }; // Add user information to the post data
-//     }));
-//     setPosts(postsData);
-//     console.log(fetchPosts)
-//     console.log(fetchUserDataById)
-//   } catch (error) {
-//     console.error('Error fetching posts:', error);
-//   }
-// };
-
   
  const unsubscribe = onSnapshot(collection(firestore, 'posts'), async (snapshot) => {
       const postsData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -360,7 +305,7 @@ export function Forum() {
     }
   };
    
-
+  // Handler to submit a post
   const handlePostSubmit = async (event) => {
     event.preventDefault();
   
@@ -372,10 +317,11 @@ export function Forum() {
           // Fetch the user data to get the correct username
           const userData = await fetchUserDataById(user.uid);
           if (userData) {
-            // Ensure that the avatar field is not undefined
-            const avatar = authenticatedUser && authenticatedUser.avatar ? authenticatedUser.avatar : userData.avatar;
-            const username = authenticatedUser && authenticatedUser.username ? authenticatedUser.username : userData.username;
-
+            // Use the default avatar icon if the user doesn't have an avatar yet
+            const defaultAvatar = 'default_avatar_url'; 
+            const avatar = userData.avatar || defaultAvatar; 
+            const username = userData.username;
+  
             // Include the username and avatar of the currently authenticated user when submitting a new post
             const newPostRef = await addDoc(collection(firestore, 'posts'), {
               content: postContent,

@@ -2,6 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { getAuth, updateProfile } from 'firebase/auth';
 import { doc, updateDoc, getFirestore } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import Spinner from 'react-bootstrap/Spinner';
+import { Alert } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { VscChromeClose } from "react-icons/vsc";
 
 import './profile.css';
 
@@ -16,6 +21,9 @@ export function ProfileEdit({ onProfileUpdate, onCancel }) {
 
   const [avatarFile, setAvatarFile] = useState(null);
   const [formModified, setFormModified] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState(false)
+  const navigate = useNavigate
 
   const storage = getStorage();
 
@@ -28,13 +36,27 @@ export function ProfileEdit({ onProfileUpdate, onCancel }) {
     const file = e.target.files[0];
     if (file) {
       setAvatarFile(file);
+    
+      // Read the selected file to generate a preview
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        // Set the URL of the selected file as the avatar preview
+        setUpdatedProfile({ ...updatedProfile, avatar: event.target.result });
+      };
+      reader.readAsDataURL(file);
+    } else {
+      // If no file is selected, clear the avatar preview by setting it to null
+      setUpdatedProfile({ ...updatedProfile, avatar: null });
     }
   };
+  
+  
 
   const handleAvatarUpload = async () => {
     try {
       if (avatarFile) {
         const storageRef = ref(storage, `avatars/${auth.currentUser.uid}`);
+        setIsLoading(true); // Show spinner
         await uploadBytes(storageRef, avatarFile);
   
         const avatarUrl = await getDownloadURL(storageRef);
@@ -46,7 +68,12 @@ export function ProfileEdit({ onProfileUpdate, onCancel }) {
         const userDocRef = doc(firestore, 'users', auth.currentUser.uid);
         await updateDoc(userDocRef, { avatar: avatarUrl });
   
-        setUpdatedProfile({ ...updatedProfile, avatar: avatarUrl });
+        setUpdatedProfile({ ...updatedProfile, avatar: null });
+
+        setAvatarFile(null); // Clear uploaded file
+        setIsLoading(false); // Hide spinner
+        // alert('File sent'); // Alert message
+        setMessage(true)
       }
     } catch (error) {
       console.error('Error uploading avatar:', error);
@@ -54,7 +81,6 @@ export function ProfileEdit({ onProfileUpdate, onCancel }) {
     }
   };
   
-
   const handleAvatarUploadError = (error) => {
     console.error('Failed to upload avatar:', error);
     alert('Failed to upload avatar. Please try again.');
@@ -77,6 +103,7 @@ export function ProfileEdit({ onProfileUpdate, onCancel }) {
       avatar: auth.currentUser.photoURL || 'default_avatar_url',
     });
     setFormModified(false);
+    // navigate("pages/forum")
   };
 
   useEffect(() => {
@@ -97,11 +124,16 @@ export function ProfileEdit({ onProfileUpdate, onCancel }) {
 
   return (
     <>
-      <div className="container">
+     
+      <div className="container py-4">
         <div className="row">
-          <div className="col-10 col-lg-4 m-auto">
-            <h4>My Profile</h4>
+          <div className="col-10 col-lg-6 m-auto">
+          <div className="page-info py-4">
+          <h4>My Profile</h4>
+            <Link to={"/pages/forum"}><button type="button" className='cancel-btn' onClick={handleCancel}><VscChromeClose  style={{fontSize: '25px',background: 'none'}}/></button></Link>
+          </div>
             <div className="profile-edit-form">
+
               <form onSubmit={handleSubmit} className='profile-form'>
                 <label>
                   Username:
@@ -114,27 +146,41 @@ export function ProfileEdit({ onProfileUpdate, onCancel }) {
                 </label>
                 <br />
                 <label className='profile-picture'>
-                  Profile picture
+              
                   <input
                     type="file"
                     accept="image/*"
                     onChange={handleAvatarChange}
                   />
                   <br />
-                  {updatedProfile.avatar && (
+                  {updatedProfile.avatar && !isLoading && (
                     <img
                       src={updatedProfile.avatar}
                       alt="Preview"
                       style={{ maxWidth: '100px', maxHeight: '100px', marginTop: '10px' }}
                     />
                   )}
+                  {isLoading && (
+                    <Spinner animation="border" role="status">
+                      <span className="sr-only">Loading...</span>
+                    </Spinner>
+                    
+                    
+                  )}
+                  {message &&(
+                    <Alert  variant="light">
+                    File sent
+                 </Alert>
+                  )}
+                  
                 </label>
                 <br />
                 <div className='profile-btn'>
                   <button type="submit" className='save-btn'>Upload</button>
-                  <button type="button" className='cancel-btn' onClick={handleCancel}>
-                    Cancel
-                  </button>
+               
+                   
+                  
+                  
                 </div>
               </form>
             </div>

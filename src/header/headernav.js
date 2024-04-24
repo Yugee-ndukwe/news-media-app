@@ -40,7 +40,7 @@
     
             <Navbar collapseOnSelect expand="lg" >
                 <div className="container-fluid bg-warning">
-                  <Navbar.Brand as={Link} to="#" className="news">
+                  <Navbar.Brand as={Link} to="/" className="news">
                     NEWS
                   </Navbar.Brand>
                   <Navbar.Toggle aria-controls="navbarSupportedContent" />
@@ -66,31 +66,7 @@
       </header> 
 
 
-      {/* <Navbar collapseOnSelect expand="lg" className="bg-warning">
-      <Container>
-        <Navbar.Brand href="#home">NEWS</Navbar.Brand>
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="ms-auto" variant="underline" activeKey={activeKey}  onSelect={handleSelect}>
-          {Object.keys(countryNames).map((countryCode) => (
-                         <Nav.Link
-                         as={Link}
-                         to={`#${countryCode}`}
-                         className={`nav-item ${activeKey === countryCode ? 'active' : ''}`}
-                         key={countryCode}
-                         onClick={() => {
-                           setCountry(countryCode);
-                           setActiveKey(countryCode);
-                         }}
-                       >
-                         {countryNames[countryCode]}
-                       </Nav.Link>
-                      ))}
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar> */}
-
+      
      </>
    );
  }
