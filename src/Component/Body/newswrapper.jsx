@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import IMG from '../../assests/global.avif';
 import { Carousel } from "react-bootstrap";
+import VIDEO from '../../assests/Video.png'
 import '../../index.css';
 
 export function NewsSource() {
@@ -56,11 +57,24 @@ export function NewsSource() {
             {travelArticles.map((article, index) => (
               <Carousel.Item key={index}>
                 <div className="w-100">
-                  <img
+                  {article.video_url ?(
+                     <iframe
+                     src={article.video_url && article.video_is_valid}
+                     title="News Video"
+                     width="100%"
+                     height="200px"
+                     frameBorder="0"
+                     allowFullScreen
+                     className="card-img-top"
+                   ></iframe>
+                  ) : (
+                    <img
                     className="d-block w-100"
                     src={article.image_url ? article.image_url : IMG} style={{ width: '100%', height: '300px' }} 
                     alt={article.title}
                   />
+                  )}
+                 
                 </div>
                 <Carousel.Caption>
                   <h3>{article.title}</h3>
@@ -81,11 +95,23 @@ export function NewsSource() {
             {crimeArticles.map((article, index) => (
               <Carousel.Item key={index}>
                 <div className="w-100">
-                  <img
+                {article.video_url ?(
+                     <iframe
+                     src={article.video_url && article.video_is_valid}
+                     title="News Video"
+                     width="100%"
+                     height="200px"
+                     frameBorder="0"
+                     allowFullScreen
+                     className="card-img-top"
+                   ></iframe>
+                  ) : (
+                    <img
                     className="d-block w-100"
                     src={article.image_url ? article.image_url : IMG} style={{ width: '100%', height: '300px' }} 
                     alt={article.title}
                   />
+                  )}
                 </div>
                 <Carousel.Caption>
                   <h3>{article.title}</h3>
@@ -106,11 +132,23 @@ export function NewsSource() {
             {educationArticles.map((article, index) => (
               <Carousel.Item key={index}>
                 <div className="w-100">
-                  <img
+                {article.video_url ?(
+                     <iframe
+                     src={article.video_url && article.video_is_valid}
+                     title="News Video"
+                     width="100%"
+                     height="200px"
+                     frameBorder="0"
+                     allowFullScreen
+                     className="card-img-top"
+                   ></iframe>
+                  ) : (
+                    <img
                     className="d-block w-100"
                     src={article.image_url ? article.image_url : IMG} style={{ width: '100%', height: '300px' }} 
                     alt={article.title}
                   />
+                  )}
                 </div>
                 <Carousel.Caption>
                   <h3>{article.title}</h3>
